@@ -1,5 +1,5 @@
 <view class="page theme-{{theme}} {{dark ? 'dark' : ''}}">
-  <nav-bar title="我的课表" showBack theme="{{theme}}" dark="{{dark}}" />
+  <nav-bar title="我的课表" showBack theme="{{theme}}" dark="{{dark}}" plain />
   
 
   

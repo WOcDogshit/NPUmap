@@ -1,0 +1,42 @@
+.nav-bar {
+  position: relative;
+  z-index: 100;
+}
+
+.nav-inner {
+  position: relative;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-back {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 88rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 52rpx;
+  color: #ffffff;
+  font-weight: 300;
+}
+
+.nav-title {
+  font-size: 34rpx;
+  color: #ffffff;
+  font-weight: 600;
+  letter-spacing: 1rpx;
+}
+
+/* plain 模式：不显示主题渐变，用页面底色 */
+.nav-bar.plain .nav-title {
+  color: var(--text-strong);
+}
+
+.nav-bar.plain .nav-back {
+  color: var(--text-strong);
+}

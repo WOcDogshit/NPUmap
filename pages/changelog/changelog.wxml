@@ -1,0 +1,46 @@
+<view class="page theme-{{theme}} {{dark ? 'dark' : ''}}">
+  <nav-bar title="更新日志" showBack theme="{{theme}}" dark="{{dark}}" plain />
+
+  <view class="log-card">
+    <view class="log-head">
+      <text class="log-version">内测版 v0.3</text>
+      <text class="log-date">2026-08-29</text>
+    </view>
+    <view class="log-item">· 新增友谊校区地图，支持双校区一键切换</view>
+    <view class="log-item">· 新增校园地点评论，支持发文字和图片</view>
+    <view class="log-item">· 新增探索打卡与校园徽章</view>
+    <view class="log-item">· 课表支持步行时间估算，一键去上课</view>
+    <view class="log-item">· 新增校园图鉴，收集地点实拍图集</view>
+    <view class="log-item">· 新增常用路线收藏，一键直达</view>
+    <view class="log-item">· 校园地点按访问频率自动排序</view>
+    <view class="log-item">· 新增隐藏主题「逐火救世」，搜索框输入暗号解锁</view>
+    <view class="log-item">· 关于页彩蛋：连续点击 logo 触发</view>
+    <view class="log-item">· 新增关于我们、隐私政策、用户协议、更新日志</view>
+    <view class="log-item">· 主题切换增加滑动动画与对勾动效</view>
+  </view>
+
+  <view class="log-card">
+    <view class="log-head">
+      <text class="log-version">v0.2</text>
+      <text class="log-date">2026-08</text>
+    </view>
+    <view class="log-item">· 全新毛玻璃风格图标与界面</view>
+    <view class="log-item">· 7 套校园主题 + 深色模式</view>
+    <view class="log-item">· 新增我的课表，支持一次添加多门课</view>
+    <view class="log-item">· 新增公交站、校车站信息与显示开关</view>
+    <view class="log-item">· 新增收藏、置顶、附近地点</view>
+    <view class="log-item">· 支持校内步行路线规划</view>
+  </view>
+
+  <view class="log-card">
+    <view class="log-head">
+      <text class="log-version">v0.1</text>
+      <text class="log-date">2026-08</text>
+    </view>
+    <view class="log-item">· 西北工业大学长安校区地图</view>
+    <view class="log-item">· 校园地点查找与搜索</view>
+    <view class="log-item">· 校内路线规划</view>
+  </view>
+
+  <view class="log-foot">保持更新，越用越好用 ✨</view>
+</view>

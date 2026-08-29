@@ -1,0 +1,44 @@
+.page {
+  min-height: 100vh;
+  background: var(--bg);
+  padding-bottom: 80rpx;
+}
+
+.log-card {
+  margin: 24rpx 28rpx;
+  background: var(--card-solid);
+  border-radius: 24rpx;
+  padding: 30rpx 32rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.05);
+}
+
+.log-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 16rpx;
+}
+
+.log-version {
+  font-size: 30rpx;
+  font-weight: 700;
+  color: var(--text-strong);
+}
+
+.log-date {
+  font-size: 22rpx;
+  color: var(--text-muted);
+}
+
+.log-item {
+  font-size: 25rpx;
+  line-height: 1.8;
+  color: var(--text);
+}
+
+.log-foot {
+  text-align: center;
+  font-size: 22rpx;
+  color: var(--text-muted);
+  margin-top: 36rpx;
+}

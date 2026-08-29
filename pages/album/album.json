@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "校园图鉴",
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "nav-bar": "/components/nav-bar/index"
+  }
+}

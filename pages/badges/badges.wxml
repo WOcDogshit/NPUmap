@@ -1,0 +1,21 @@
+<view class="page theme-{{theme}} {{dark ? 'dark' : ''}}">
+  <nav-bar title="我的徽章" showBack theme="{{theme}}" dark="{{dark}}" plain />
+
+  <view class="progress-card">
+    <view class="progress-text">「{{campusName}}」探索进度</view>
+    <view class="progress-num">{{checkedCount}} / {{totalCount}} 个地点</view>
+    <view class="progress-bar">
+      <view class="progress-fill" style="width: {{totalCount ? (checkedCount / totalCount * 100) : 0}}%"></view>
+    </view>
+    <view class="progress-hint">打开地点详情就会自动打卡 ✨</view>
+  </view>
+
+  <view class="badge-grid">
+    <view class="badge-item {{item.done ? '' : 'locked'}}" wx:for="{{badges}}" wx:key="key">
+      <view class="badge-icon">{{item.icon}}</view>
+      <view class="badge-name">{{item.name}}</view>
+      <view class="badge-desc">{{item.desc}}</view>
+      <view class="badge-state">{{item.done ? '已解锁' : '未解锁'}}</view>
+    </view>
+  </view>
+</view>

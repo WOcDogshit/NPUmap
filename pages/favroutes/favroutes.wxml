@@ -1,0 +1,24 @@
+<view class="page theme-{{theme}} {{dark ? 'dark' : ''}}">
+  <nav-bar title="常用路线" showBack theme="{{theme}}" dark="{{dark}}" plain />
+
+  <view wx:if="{{routes.length === 0}}" class="empty">
+    <view class="empty-icon">🚏</view>
+    <view class="empty-text">还没有收藏的路线</view>
+    <view class="empty-hint">规划路线时点「收藏 ⭐」就会出现在这里</view>
+  </view>
+
+  <view class="route-item" wx:for="{{routes}}" wx:key="id" data-id="{{item.id}}" bindtap="goRoute" bindlongpress="deleteRoute">
+    <view class="route-row">
+      <view class="route-dot dot-green"></view>
+      <text class="route-name">{{item.fromName}}</text>
+    </view>
+    <view class="route-row">
+      <view class="route-dot dot-red"></view>
+      <text class="route-name">{{item.toName}}</text>
+    </view>
+    <view class="route-foot">
+      <text class="route-campus" wx:if="{{item.campusName}}">{{item.campusName}}</text>
+      <text class="route-tip">点击查看 · 长按删除</text>
+    </view>
+  </view>
+</view>

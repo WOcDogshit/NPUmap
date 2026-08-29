@@ -1,0 +1,114 @@
+.page {
+  min-height: 100vh;
+  background: var(--bg);
+  padding: 32rpx;
+  box-sizing: border-box;
+}
+
+.card {
+  background: var(--glass);
+  backdrop-filter: blur(24rpx);
+  -webkit-backdrop-filter: blur(24rpx);
+  border: 1rpx solid rgba(255, 255, 255, 0.65);
+  border-radius: 28rpx;
+  padding: 12rpx 28rpx;
+  box-shadow: 0 4rpx 16rpx rgba(27, 36, 48, 0.05);
+}
+
+.form-row {
+  display: flex;
+  align-items: center;
+  padding: 28rpx 0;
+  border-bottom: 1rpx solid var(--divider);
+}
+
+.form-row:last-child {
+  border-bottom: none;
+}
+
+.form-label {
+  font-size: 28rpx;
+  color: var(--text-strong);
+  font-weight: 600;
+  width: 110rpx;
+  flex-shrink: 0;
+}
+
+.form-label-gap {
+  margin-left: 24rpx;
+}
+
+.form-input {
+  flex: 1;
+  font-size: 28rpx;
+  color: var(--text-strong);
+}
+
+.form-picker {
+  flex: 1;
+}
+
+.picker-value {
+  font-size: 28rpx;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.picker-arrow {
+  color: #c4cfdc;
+  font-size: 32rpx;
+  margin-left: 12rpx;
+}
+
+.btn-save {
+  margin-top: 32rpx;
+  background: linear-gradient(135deg, var(--c-primary), var(--c-primary-deep));
+  color: #ffffff;
+  font-size: 32rpx;
+  font-weight: 600;
+  border-radius: 46rpx;
+  height: 92rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10rpx 24rpx var(--c-primary-shadow);
+}
+
+.btn-continue {
+  margin-top: 20rpx;
+  background: var(--card-solid);
+  color: var(--c-primary);
+  font-size: 30rpx;
+  font-weight: 600;
+  border-radius: 46rpx;
+  height: 88rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2rpx solid var(--c-primary-border);
+}
+
+.btn-del {
+  margin-top: 20rpx;
+  background: var(--card-solid);
+  color: #f04137;
+  font-size: 30rpx;
+  border-radius: 46rpx;
+  height: 88rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2rpx solid rgba(240, 65, 55, 0.35);
+}
+
+.btn-back {
+  margin-top: 16rpx;
+  color: var(--text-sub);
+  font-size: 28rpx;
+  height: 80rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

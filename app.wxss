@@ -1,0 +1,175 @@
+/* ===== 全局主题变量（CSS 变量） ===== */
+page {
+  /* 主题色（默认湖水蓝） */
+  --c-primary: #1464e0;
+  --c-primary-deep: #0a3c91;
+  --c-primary-soft: rgba(20, 100, 224, 0.10);
+  --c-primary-shadow: rgba(20, 100, 224, 0.28);
+  --c-primary-border: rgba(20, 100, 224, 0.15);
+  --c-glass-top: rgba(20, 100, 224, 0.80);
+  --c-glass-bottom: rgba(10, 60, 145, 0.66);
+
+  /* 明暗模式 */
+  --bg: #eef3fa;
+  --glass: rgba(255, 255, 255, 0.74);
+  --glass-strong: rgba(255, 255, 255, 0.9);
+  --glass-solid: #ffffff;
+  --card-solid: #ffffff;
+  --text-strong: #1b2430;
+  --text: #4a5868;
+  --text-sub: #7a8a9f;
+  --text-muted: #9aa7b8;
+  --soft: #f0f4f9;
+  --divider: #f0f4f9;
+
+  background: var(--bg);
+  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  color: var(--text-strong);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ===== 深色模式 ===== */
+.dark {
+  --bg: #12151d;
+  --glass: rgba(38, 44, 56, 0.85);
+  --glass-strong: rgba(38, 44, 56, 0.95);
+  --glass-solid: #20242e;
+  --card-solid: #20242e;
+  --text-strong: #e8ecf2;
+  --text: #c2cbd8;
+  --text-sub: #8d98a9;
+  --text-muted: #667386;
+  --soft: #262c38;
+  --divider: #2a3140;
+}
+
+/* 秦岭翠绿 */
+.theme-forest {
+  --c-primary: #0e9f6e;
+  --c-primary-deep: #065f46;
+  --c-primary-soft: rgba(14, 159, 110, 0.12);
+  --c-primary-shadow: rgba(14, 159, 110, 0.30);
+  --c-primary-border: rgba(14, 159, 110, 0.18);
+  --c-glass-top: rgba(14, 159, 110, 0.82);
+  --c-glass-bottom: rgba(6, 95, 70, 0.70);
+}
+
+/* 丹霞夕照 */
+.theme-sunset {
+  --c-primary: #e86a2e;
+  --c-primary-deep: #b8431a;
+  --c-primary-soft: rgba(232, 106, 46, 0.14);
+  --c-primary-shadow: rgba(232, 106, 46, 0.30);
+  --c-primary-border: rgba(232, 106, 46, 0.18);
+  --c-glass-top: rgba(232, 106, 46, 0.82);
+  --c-glass-bottom: rgba(184, 67, 26, 0.72);
+}
+
+/* 紫霞漫天 */
+.theme-violet {
+  --c-primary: #8b5cf6;
+  --c-primary-deep: #d946ef;
+  --c-primary-soft: rgba(139, 92, 246, 0.12);
+  --c-primary-shadow: rgba(139, 92, 246, 0.30);
+  --c-primary-border: rgba(139, 92, 246, 0.18);
+  --c-glass-top: rgba(139, 92, 246, 0.84);
+  --c-glass-bottom: rgba(217, 70, 239, 0.66);
+}
+
+/* 青瓷碧水 */
+.theme-celadon {
+  --c-primary: #0d9488;
+  --c-primary-deep: #0e7490;
+  --c-primary-soft: rgba(13, 148, 136, 0.12);
+  --c-primary-shadow: rgba(13, 148, 136, 0.30);
+  --c-primary-border: rgba(13, 148, 136, 0.18);
+  --c-glass-top: rgba(13, 148, 136, 0.84);
+  --c-glass-bottom: rgba(14, 116, 144, 0.72);
+}
+
+/* 星河夜色 */
+.theme-night {
+  --c-primary: #4c6ef5;
+  --c-primary-deep: #7048e8;
+  --c-primary-soft: rgba(76, 110, 245, 0.12);
+  --c-primary-shadow: rgba(76, 110, 245, 0.30);
+  --c-primary-border: rgba(76, 110, 245, 0.18);
+  --c-glass-top: rgba(76, 110, 245, 0.84);
+  --c-glass-bottom: rgba(112, 72, 232, 0.74);
+}
+
+/* 落日熔金 */
+.theme-golden {
+  --c-primary: #d97706;
+  --c-primary-deep: #7c3aed;
+  --c-primary-soft: rgba(217, 119, 6, 0.12);
+  --c-primary-shadow: rgba(124, 58, 237, 0.30);
+  --c-primary-border: rgba(217, 119, 6, 0.18);
+  --c-glass-top: rgba(217, 119, 6, 0.86);
+  --c-glass-bottom: rgba(124, 58, 237, 0.76);
+}
+
+/* ===== 深色模式下的主题配色（更柔和、更深的色调） ===== */
+.dark.theme-lake {
+  --c-primary: #3b82f6;
+  --c-primary-deep: #1e40af;
+  --c-primary-soft: rgba(59, 130, 246, 0.18);
+  --c-primary-shadow: rgba(59, 130, 246, 0.35);
+  --c-primary-border: rgba(96, 165, 250, 0.35);
+  --c-glass-top: rgba(30, 58, 138, 0.82);
+  --c-glass-bottom: rgba(15, 23, 42, 0.9);
+}
+.dark.theme-forest {
+  --c-primary: #10b981;
+  --c-primary-deep: #065f46;
+  --c-primary-soft: rgba(16, 185, 129, 0.16);
+  --c-primary-shadow: rgba(16, 185, 129, 0.32);
+  --c-primary-border: rgba(52, 211, 153, 0.35);
+  --c-glass-top: rgba(8, 90, 70, 0.82);
+  --c-glass-bottom: rgba(8, 22, 18, 0.9);
+}
+.dark.theme-sunset {
+  --c-primary: #f97316;
+  --c-primary-deep: #9a3412;
+  --c-primary-soft: rgba(249, 115, 22, 0.16);
+  --c-primary-shadow: rgba(249, 115, 22, 0.32);
+  --c-primary-border: rgba(251, 146, 60, 0.35);
+  --c-glass-top: rgba(154, 52, 18, 0.82);
+  --c-glass-bottom: rgba(30, 16, 12, 0.9);
+}
+.dark.theme-violet {
+  --c-primary: #a78bfa;
+  --c-primary-deep: #7e22ce;
+  --c-primary-soft: rgba(167, 139, 250, 0.18);
+  --c-primary-shadow: rgba(167, 139, 250, 0.35);
+  --c-primary-border: rgba(196, 181, 253, 0.35);
+  --c-glass-top: rgba(107, 33, 168, 0.82);
+  --c-glass-bottom: rgba(28, 12, 48, 0.9);
+}
+.dark.theme-celadon {
+  --c-primary: #14b8a6;
+  --c-primary-deep: #0f766e;
+  --c-primary-soft: rgba(20, 184, 166, 0.16);
+  --c-primary-shadow: rgba(20, 184, 166, 0.32);
+  --c-primary-border: rgba(45, 212, 191, 0.35);
+  --c-glass-top: rgba(15, 118, 110, 0.82);
+  --c-glass-bottom: rgba(6, 24, 26, 0.9);
+}
+.dark.theme-night {
+  --c-primary: #818cf8;
+  --c-primary-deep: #4c1d95;
+  --c-primary-soft: rgba(129, 140, 248, 0.18);
+  --c-primary-shadow: rgba(129, 140, 248, 0.35);
+  --c-primary-border: rgba(165, 180, 252, 0.35);
+  --c-glass-top: rgba(49, 46, 129, 0.82);
+  --c-glass-bottom: rgba(16, 12, 40, 0.9);
+}
+.dark.theme-golden {
+  --c-primary: #fbbf24;
+  --c-primary-deep: #6d28d9;
+  --c-primary-soft: rgba(251, 191, 36, 0.16);
+  --c-primary-shadow: rgba(109, 40, 217, 0.35);
+  --c-primary-border: rgba(251, 191, 36, 0.4);
+  --c-glass-top: rgba(120, 60, 10, 0.82);
+  --c-glass-bottom: rgba(40, 18, 70, 0.9);
+}

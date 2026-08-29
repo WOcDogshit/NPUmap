@@ -1,0 +1,83 @@
+<view class="page theme-{{theme}} {{dark ? 'dark' : ''}}">
+  <nav-bar title="{{navTitle}}" showBack theme="{{theme}}" dark="{{dark}}" />
+  <!-- 路线地图 -->
+  <map
+    class="route-map"
+    longitude="{{center.longitude}}"
+    latitude="{{center.latitude}}"
+    scale="{{scale}}"
+    markers="{{markers}}"
+    polyline="{{polyline}}"
+    include-points="{{includePoints}}"
+    show-location="{{true}}"
+    subkey="{{mapSubkey}}"
+    layer-style="{{mapLayerStyle}}"
+  ></map>
+
+  <!-- 底部信息面板 -->
+  <view class="panel">
+    <view class="panel-head">
+      <text class="panel-title">步行路线</text>
+      <view wx:if="{{!loading && !errorMsg}}" class="chips">
+        <text class="chip chip-time">🕐 约 {{durationMin}} 分钟</text>
+        <text class="chip chip-dist">📏 {{distanceKm}} 公里</text>
+      </view>
+    </view>
+
+    <view class="route-head">
+      <view class="point-row" bindtap="showStartPicker">
+        <view class="dot dot-green"></view>
+        <text class="point-name">起点：{{fromName || '加载中…'}}</text>
+        <text class="point-edit">换 ›</text>
+      </view>
+      <view class="point-row">
+        <view class="dot dot-red"></view>
+        <text class="point-name">终点：{{to.name}}</text>
+      </view>
+    </view>
+
+    <view wx:if="{{loading}}" class="state">正在规划路线…</view>
+    <view wx:elif="{{errorMsg}}" class="state error">{{errorMsg}}</view>
+
+    <scroll-view scroll-y class="steps" wx:if="{{steps.length}}">
+      <view class="step" wx:for="{{steps}}" wx:key="idx">
+        <view class="step-left">
+          <view class="step-line"></view>
+          <view class="step-dot"></view>
+        </view>
+        <view class="step-text">{{item.instruction}}</view>
+      </view>
+    </scroll-view>
+
+    <view class="actions">
+      <view class="btn btn-fav {{routeFaved ? 'on' : ''}}" bindtap="toggleFavRoute">{{routeFaved ? '已收藏 ⭐' : '收藏 ⭐'}}</view>
+      <view class="btn btn-change" bindtap="showStartPicker">换起点</view>
+      <view class="btn btn-back" bindtap="back">返回</view>
+    </view>
+  </view>
+
+  <!-- 起点选择弹层 -->
+  <view class="picker-mask" wx:if="{{showPicker}}" bindtap="hideStartPicker"></view>
+  <view class="picker" wx:if="{{showPicker}}">
+    <view class="picker-head">
+      <text class="picker-title">选择起点</text>
+      <text class="picker-close" bindtap="hideStartPicker">✕</text>
+    </view>
+    <scroll-view scroll-y class="picker-list">
+      <view class="picker-item" data-idx="0" bindtap="selectFrom">
+        <view class="picker-emoji emoji-loc">📍</view>
+        <view class="picker-info">
+          <view class="picker-name">我的位置</view>
+          <view class="picker-desc">使用当前定位</view>
+        </view>
+      </view>
+      <view class="picker-item" wx:for="{{pois}}" wx:key="id" data-idx="{{index + 1}}" bindtap="selectFrom">
+        <view class="picker-emoji emoji-{{item.color}}">{{item.icon}}</view>
+        <view class="picker-info">
+          <view class="picker-name">{{item.name}}</view>
+          <view class="picker-desc">{{item.type}} · {{item.address}}</view>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+</view>

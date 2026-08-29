@@ -1,0 +1,301 @@
+.page {
+  min-height: 100vh;
+  background: var(--bg);
+  padding: 24rpx 24rpx 60rpx;
+  box-sizing: border-box;
+}
+
+.group {
+  margin-bottom: 32rpx;
+}
+
+.group-title {
+  font-size: 24rpx;
+  color: var(--text-muted);
+  margin: 0 12rpx 14rpx;
+}
+
+.card {
+  background: var(--glass);
+  backdrop-filter: blur(24rpx);
+  -webkit-backdrop-filter: blur(24rpx);
+  border: 1rpx solid rgba(255, 255, 255, 0.65);
+  border-radius: 24rpx;
+  overflow: hidden;
+  box-shadow: 0 4rpx 16rpx rgba(27, 36, 48, 0.05);
+}
+
+/* 主题行 */
+.theme-row {
+  display: flex;
+  align-items: center;
+  padding: 24rpx 28rpx;
+  border-bottom: 1rpx solid var(--divider);
+}
+
+.theme-row:last-child {
+  border-bottom: none;
+}
+
+.theme-dot {
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 50%;
+  margin-right: 22rpx;
+  flex-shrink: 0;
+  box-shadow: 0 0 0 6rpx rgba(27, 36, 48, 0.06);
+}
+
+.theme-info {
+  flex: 1;
+}
+
+/* 隐藏主题「逐火救世」：金色渐变字体 */
+.theme-name-golden {
+  background: linear-gradient(135deg, #fbbf24, #d97706);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-weight: 700;
+}
+
+.theme-name {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: var(--text-strong);
+}
+
+.theme-desc {
+  font-size: 22rpx;
+  color: var(--text-muted);
+  margin-top: 4rpx;
+}
+
+.theme-check {
+  color: var(--c-primary);
+  font-size: 34rpx;
+  font-weight: 700;
+  animation: check-pop 0.35s ease-out;
+}
+
+/* 对勾出现时的弹跳动画 */
+@keyframes check-pop {
+  from {
+    transform: scale(0);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.35);
+    opacity: 1;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* 开关行 */
+.switch-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 26rpx 28rpx;
+}
+
+.switch-text {
+  flex: 1;
+  margin-right: 16rpx;
+}
+
+.switch-name {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: var(--text-strong);
+}
+
+.switch-desc {
+  font-size: 22rpx;
+  color: var(--text-muted);
+  margin-top: 4rpx;
+}
+
+/* 深色地图「？」说明按钮 */
+.help-q {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32rpx;
+  height: 32rpx;
+  margin-left: 10rpx;
+  border-radius: 50%;
+  background: var(--soft);
+  color: var(--text-sub);
+  font-size: 22rpx;
+  line-height: 1;
+  vertical-align: middle;
+}
+
+/* 菜单行 */
+.menu-row {
+  display: flex;
+  align-items: center;
+  padding: 24rpx 28rpx;
+  border-bottom: 1rpx solid var(--divider);
+}
+
+.menu-row:last-child {
+  border-bottom: none;
+}
+
+.menu-emoji {
+  font-size: 34rpx;
+  margin-right: 20rpx;
+  flex-shrink: 0;
+}
+
+.menu-name {
+  flex: 1;
+  font-size: 30rpx;
+  color: var(--text-strong);
+}
+
+.menu-arrow {
+  color: #c4cfdc;
+  font-size: 36rpx;
+  margin-left: 12rpx;
+}
+
+.menu-about {
+  font-size: 22rpx;
+  color: var(--text-muted);
+}
+
+.fav-emoji {
+  width: 56rpx;
+  height: 56rpx;
+  border-radius: 16rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30rpx;
+  margin-right: 20rpx;
+  flex-shrink: 0;
+}
+
+.emoji-blue   { background: rgba(20, 100, 224, 0.10); }
+.emoji-green  { background: rgba(34, 176, 140, 0.12); }
+.emoji-orange { background: rgba(255, 138, 61, 0.14); }
+.emoji-red    { background: rgba(240, 65, 55, 0.10); }
+.emoji-purple { background: rgba(155, 89, 182, 0.12); }
+
+.empty-tip {
+  padding: 32rpx 28rpx;
+  font-size: 26rpx;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+/* 附近弹层 */
+.nearby-mask {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(27, 36, 48, 0.45);
+  z-index: 40;
+}
+
+.nearby {
+  position: fixed;
+  left: 16rpx;
+  right: 16rpx;
+  bottom: 16rpx;
+  z-index: 41;
+  background: var(--glass);
+  backdrop-filter: blur(24rpx);
+  -webkit-backdrop-filter: blur(24rpx);
+  border: 1rpx solid rgba(255, 255, 255, 0.65);
+  border-radius: 32rpx;
+  max-height: 72vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 -6rpx 30rpx rgba(27, 36, 48, 0.2);
+}
+
+.nearby-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28rpx 32rpx 16rpx;
+  border-bottom: 1rpx solid var(--divider);
+}
+
+.nearby-title {
+  font-size: 32rpx;
+  font-weight: 700;
+  color: var(--text-strong);
+}
+
+.nearby-close {
+  color: var(--text-muted);
+  font-size: 32rpx;
+  padding: 0 8rpx;
+}
+
+.nearby-state {
+  padding: 60rpx 0;
+  text-align: center;
+  font-size: 26rpx;
+  color: var(--text-muted);
+}
+
+.nearby-list {
+  max-height: 62vh;
+}
+
+.nearby-item {
+  display: flex;
+  align-items: center;
+  padding: 20rpx 32rpx;
+  border-bottom: 1rpx solid var(--divider);
+}
+
+.nearby-item:last-child {
+  border-bottom: none;
+}
+
+.nearby-rank {
+  width: 44rpx;
+  font-size: 26rpx;
+  font-weight: 700;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.nearby-emoji {
+  width: 68rpx;
+  height: 68rpx;
+  border-radius: 20rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 34rpx;
+  margin-right: 20rpx;
+  flex-shrink: 0;
+}
+
+.nearby-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.nearby-name {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: var(--text-strong);
+}
+
+.nearby-desc {
+  font-size: 22rpx;
+  color: var(--text-muted);
+  margin-top: 4rpx;
+}

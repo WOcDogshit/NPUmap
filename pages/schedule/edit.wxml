@@ -1,0 +1,36 @@
+<view class="page theme-{{theme}} {{dark ? 'dark' : ''}}">
+  <nav-bar title="{{navTitle}}" showBack theme="{{theme}}" dark="{{dark}}" />
+  <view class="card">
+    <view class="form-row">
+      <text class="form-label">课程名</text>
+      <input class="form-input" placeholder="如：高等数学" value="{{name}}" bindinput="onName" />
+    </view>
+    <view class="form-row">
+      <text class="form-label">星期</text>
+      <picker class="form-picker" mode="selector" range="{{dayOptions}}" value="{{dayIndex}}" bindchange="onDay">
+        <view class="picker-value">{{dayOptions[dayIndex]}} <text class="picker-arrow">›</text></view>
+      </picker>
+    </view>
+    <view class="form-row">
+      <text class="form-label">开始</text>
+      <picker class="form-picker" mode="time" value="{{startTime}}" bindchange="onStart">
+        <view class="picker-value">{{startTime}} <text class="picker-arrow">›</text></view>
+      </picker>
+      <text class="form-label form-label-gap">结束</text>
+      <picker class="form-picker" mode="time" value="{{endTime}}" bindchange="onEnd">
+        <view class="picker-value">{{endTime}} <text class="picker-arrow">›</text></view>
+      </picker>
+    </view>
+    <view class="form-row">
+      <text class="form-label">地点</text>
+      <picker class="form-picker" mode="selector" range="{{poiNames}}" value="{{poiIndex}}" bindchange="onPoi">
+        <view class="picker-value">{{poiNames[poiIndex]}} <text class="picker-arrow">›</text></view>
+      </picker>
+    </view>
+  </view>
+
+  <view class="btn-save" bindtap="save">保存</view>
+  <view class="btn-continue" bindtap="saveAndContinue">＋ 保存并继续添加</view>
+  <view class="btn-del" wx:if="{{isEdit}}" bindtap="remove">删除这节课</view>
+  <view class="btn-back" bindtap="back">返回</view>
+</view>

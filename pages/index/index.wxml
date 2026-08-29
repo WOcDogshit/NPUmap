@@ -1,0 +1,96 @@
+<view class="page theme-{{theme}} {{dark ? 'dark' : ''}}">
+  <!-- 渐变导航栏 -->
+  <nav-bar title="NPUmap" theme="{{theme}}" dark="{{dark}}" />
+
+  <!-- 顶部渐变头部 -->
+  <view class="hero">
+    <view class="hero-top">
+      <view>
+        <view class="hero-greet" bindtap="refreshGreet">{{greet}}</view>
+        <view class="hero-sub">西北工业大学 · {{campus.shortName}}</view>
+      </view>
+      <view class="more-btn" bindtap="goMore">☰</view>
+    </view>
+    <view class="search-wrap">
+      <text class="search-icon">🔍</text>
+      <input
+        class="search-input"
+        placeholder="搜教学楼、食堂、宿舍…"
+        placeholder-class="search-placeholder"
+        value="{{keyword}}"
+        bindinput="onSearchInput"
+        confirm-type="search"
+      />
+      <text wx:if="{{keyword}}" class="search-clear" bindtap="onSearchClear">✕</text>
+    </view>
+  </view>
+
+  <!-- 顶部工具栏：校区切换 + 定位按钮（顶部对齐） -->
+  <view class="top-row">
+    <view class="campus-switch">
+      <view class="campus-slider" style="left: {{currentCampus === 'youyi' ? '156rpx' : '6rpx'}}"></view>
+      <view
+        class="campus-tab {{currentCampus === 'changan' ? 'active' : ''}}"
+        data-campus="changan"
+        bindtap="switchCampus"
+      >长安校区</view>
+      <view
+        class="campus-tab {{currentCampus === 'youyi' ? 'active' : ''}}"
+        data-campus="youyi"
+        bindtap="switchCampus"
+      >友谊校区</view>
+    </view>
+    <view class="locate-btn" bindtap="locate">📍</view>
+  </view>
+
+  <!-- 校园地图 -->
+  <map
+    class="campus-map"
+    longitude="{{center.longitude}}"
+    latitude="{{center.latitude}}"
+    scale="{{scale}}"
+    markers="{{markers}}"
+    show-location="{{true}}"
+    bindmarkertap="onTapMarker"
+    bindregionchange="onRegionChange"
+    subkey="{{mapSubkey}}"
+    layer-style="{{mapLayerStyle}}"
+  ></map>
+
+
+  <!-- 底部地点列表（可收起） -->
+  <view class="poi-list {{listCollapsed ? 'collapsed' : ''}}">
+    <view class="poi-list-header" bindtap="toggleList">
+      <view class="poi-list-left">
+        <text class="poi-list-title">校园地点</text>
+        <text class="poi-list-sub" wx:if="{{listCollapsed}}">已收起 · 点击展开</text>
+      </view>
+      <view class="poi-header-right">
+        <text class="poi-count">共 {{filtered.length}} 个</text>
+        <view class="poi-toggle">
+          <view class="chevron {{listCollapsed ? 'up' : ''}}"></view>
+        </view>
+      </view>
+    </view>
+    <scroll-view scroll-y class="poi-scroll {{listCollapsed ? 'hide' : ''}}">
+      <view
+        class="poi-item"
+        wx:for="{{filtered}}"
+        wx:key="id"
+        data-id="{{item.id}}"
+        bindtap="onTapPoi"
+      >
+        <view class="poi-emoji emoji-{{item.color}}">{{item.icon}}</view>
+        <view class="poi-info">
+          <view class="poi-name-row">
+            <text class="poi-name">{{item.name}}</text>
+            <text class="pin-badge" wx:if="{{item.pinned}}">置顶</text>
+          </view>
+          <view class="poi-desc">{{item.type}} · {{item.description}}</view>
+        </view>
+        <view class="poi-pin {{item.pinned ? 'on' : ''}}" data-id="{{item.id}}" catchtap="onTogglePin">📌</view>
+        <text class="poi-arrow">›</text>
+      </view>
+    </scroll-view>
+  </view>
+</view>

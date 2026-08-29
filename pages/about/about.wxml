@@ -1,0 +1,56 @@
+<view class="page theme-{{theme}} {{dark ? 'dark' : ''}}">
+  <nav-bar title="关于我们" showBack theme="{{theme}}" dark="{{dark}}" plain />
+
+  <view class="about-hero">
+    <view class="logo" bindtap="onLogoTap">
+      <image class="logo-img" src="/images/app-logo.png" mode="aspectFill" />
+    </view>
+    <view class="egg-hint" wx:if="{{eggHint}}">试试输入 <text class="hint-grad">爱上雷神</text> 或 <text class="hint-grad">33550336</text>？</view>
+    <view class="app-name">NPUmap · 校园地图</view>
+    <view class="app-sub">西北工业大学 · 长安校区</view>
+    <view class="version">内测版 v0.3</view>
+  </view>
+
+  <view class="card">
+    <view class="card-title">关于这个应用</view>
+    <view class="card-text">NPUmap 是一款面向西北工业大学长安校区的轻量化校园地图与导航小程序，帮你快速找到教学楼、食堂、宿舍、体育馆等校园地点，并规划校内步行路线，开学不迷路。</view>
+  </view>
+
+  <view class="card">
+    <view class="card-title">主要功能</view>
+    <view class="feature-row">📍 校园地点查找与搜索</view>
+    <view class="feature-row">🚶 校内步行路线规划</view>
+    <view class="feature-row">🚌 公交站 / 校车站信息</view>
+    <view class="feature-row">📅 我的课表与上课提醒</view>
+    <view class="feature-row">🎨 个性化主题与深色模式</view>
+  </view>
+
+  <view class="card">
+    <view class="card-title">联系我们</view>
+    <view class="card-text">如果你发现地点信息有误、功能有问题，或者有任何建议，欢迎联系我们：</view>
+    <view class="contact-row">📧 邮箱：3133722737@qq.com</view>
+  </view>
+
+  <view class="link-group">
+    <view class="link-row" bindtap="goChangelog">
+      <text class="link-name">更新日志</text>
+      <text class="link-arrow">›</text>
+    </view>
+    <view class="link-row" bindtap="goPrivacy">
+      <text class="link-name">隐私政策</text>
+      <text class="link-arrow">›</text>
+    </view>
+    <view class="link-row" bindtap="goTerms">
+      <text class="link-name">用户协议</text>
+      <text class="link-arrow">›</text>
+    </view>
+  </view>
+
+  <view class="footer">NPUmap · 仅供校园学习交流使用</view>
+
+  <!-- 彩蛋弹层 -->
+  <view class="egg-mask" wx:if="{{eggOpen}}"></view>
+  <view class="egg-card" wx:if="{{eggOpen}}">
+    <view class="egg-text">{{eggText}}</view>
+  </view>
+</view>

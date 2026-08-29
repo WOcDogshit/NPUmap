@@ -1,0 +1,6 @@
+<view class="nav-bar {{plain ? 'plain' : ''}}" style="padding-top: {{statusBarHeight}}px; background: {{plain ? 'transparent' : gradient}}">
+  <view class="nav-inner">
+    <view class="nav-back" wx:if="{{showBack}}" bindtap="onBack">‹</view>
+    <text class="nav-title">{{title}}</text>
+  </view>
+</view>

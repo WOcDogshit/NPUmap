@@ -1,0 +1,30 @@
+<view class="page theme-{{theme}} {{dark ? 'dark' : ''}}">
+  <nav-bar title="我的课表" showBack theme="{{theme}}" dark="{{dark}}" />
+  <!-- 下一节课 -->
+  <view class="next-card" wx:if="{{next}}">
+    <view class="next-label">⏰ 下一节课</view>
+    <view class="next-name">{{next.name}}</view>
+    <view class="next-meta">{{next.timeText}} · {{next.poiName || '未设地点'}}</view>
+    <view class="next-walk" wx:if="{{walkText}}">🚶 {{walkText}}</view>
+    <view class="next-btn" data-id="{{next.id}}" bindtap="goClass">去上课 →</view>
+  </view>
+  <view class="next-card empty-card" wx:else>
+    <view class="next-label">📅 还没有课程</view>
+    <view class="next-meta">点右下角「+」添加你的课程</view>
+  </view>
+
+  <!-- 按星期分组的课表 -->
+  <view class="day-group" wx:for="{{grouped}}" wx:key="day" wx:for-item="g">
+    <view class="day-label">{{g.label}}</view>
+    <view class="course-card" wx:for="{{g.items}}" wx:key="id" wx:for-item="c" data-id="{{c.id}}" bindtap="editCourse">
+      <view class="course-main">
+        <view class="course-name">{{c.name}}</view>
+        <view class="course-meta">{{c.timeText}} · {{c.poiName || '未设地点'}}</view>
+      </view>
+      <view class="course-go" data-id="{{c.id}}" catchtap="goClass">去上课</view>
+    </view>
+  </view>
+
+  <!-- 添加课程按钮 -->
+  <view class="add-btn" bindtap="addCourse">＋</view>
+</view>

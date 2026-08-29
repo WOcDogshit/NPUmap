@@ -1,0 +1,70 @@
+<view class="page theme-{{theme}} {{dark ? 'dark' : ''}}">
+  <nav-bar title="隐私政策" showBack theme="{{theme}}" dark="{{dark}}" plain />
+
+  <view class="doc">
+    <view class="doc-title">隐私政策</view>
+    <view class="doc-date">更新日期：2026年8月29日　生效日期：2026年8月29日</view>
+
+    <view class="section">
+      <view class="section-text">欢迎使用 NPUmap（以下简称"本小程序"）。我们深知个人信息对你的重要性，并会尽全力保护你的个人信息安全。请你仔细阅读、充分理解本隐私政策的全部内容。</view>
+    </view>
+
+    <view class="section">
+      <view class="section-title">一、我们收集的信息</view>
+      <view class="section-text">1. 位置信息：当你使用"我的位置""附近地点""路线规划"等功能时，我们会获取你的位置信息，用于在地图上显示你的当前位置、查找附近地点、规划步行路线。
+2. 你主动填写的信息：当你在"我的课表"中手动添加课程信息时，这些信息仅保存在你的手机本地。
+3. 设备信息：为保障功能正常运行，我们可能会读取微信提供的基础设备信息（如设备型号、系统版本），仅用于功能适配与问题排查。</view>
+    </view>
+
+    <view class="section">
+      <view class="section-title">二、信息的使用</view>
+      <view class="section-text">1. 位置信息仅用于实现定位、附近地点、路线规划等功能。
+2. 我们不会将你的个人信息用于本隐私政策未载明的其他用途。</view>
+    </view>
+
+    <view class="section">
+      <view class="section-title">三、本地存储说明</view>
+      <view class="section-text">你的主题设置、收藏、置顶、课表等信息仅保存在你的手机本地缓存中，我们不会将上述信息上传到任何服务器。你可以随时在"更多 → 清除缓存"中删除全部本地数据。</view>
+    </view>
+
+    <view class="section">
+      <view class="section-title">四、第三方服务</view>
+      <view class="section-text">本小程序的地图展示与路线规划功能由腾讯位置服务（深圳市腾讯计算机系统有限公司）提供。为实现路线规划，我们会将你的起点和终点坐标发送至腾讯位置服务，由其返回路线结果。腾讯位置服务将按照其自身隐私政策处理相关信息，你可以前往腾讯位置服务官网（lbs.qq.com）查看相关说明。</view>
+    </view>
+
+    <view class="section">
+      <view class="section-title">五、信息的共享、转让与公开披露</view>
+      <view class="section-text">1. 我们不会向任何第三方出售你的个人信息。
+2. 我们不会主动共享或转让你的个人信息，但以下情形除外：获得你的明确同意；根据法律法规规定、诉讼争议解决需要，或按行政、司法机关依法提出的要求。
+3. 涉及未成年人个人信息时，我们会严格依照法律法规处理。</view>
+    </view>
+
+    <view class="section">
+      <view class="section-title">六、信息的存储与保护</view>
+      <view class="section-text">1. 本小程序不架设自有服务器，除发送给腾讯位置服务用于路线计算的坐标外，不收集、不上传你的个人信息。
+2. 存储在本地缓存中的数据由微信客户端统一管理，你可以通过"清除缓存"随时删除。</view>
+    </view>
+
+    <view class="section">
+      <view class="section-title">七、未成年人保护</view>
+      <view class="section-text">我们非常重视对未成年人个人信息的保护。若你是未成年人，请在监护人指导下使用本小程序，并请在监护人同意后再向我们提供任何个人信息。</view>
+    </view>
+
+    <view class="section">
+      <view class="section-title">八、你的权利</view>
+      <view class="section-text">1. 你可以通过手机系统设置关闭本小程序的定位权限（关闭后定位、附近地点、路线规划功能将不可用）。
+2. 你可以通过"更多 → 清除缓存"删除本地存储的全部数据。</view>
+    </view>
+
+    <view class="section">
+      <view class="section-title">九、本政策的更新</view>
+      <view class="section-text">我们可能会适时修订本隐私政策。更新后的政策会在本页面公布，修订内容自公布之日起生效。若涉及对你有重大影响的变更，我们会在小程序内以显著方式提示你。</view>
+    </view>
+
+    <view class="section">
+      <view class="section-title">十、联系我们</view>
+      <view class="section-text">如果你对本隐私政策有任何疑问、意见或建议，请联系我们：
+邮箱：3133722737@qq.com</view>
+    </view>
+  </view>
+</view>

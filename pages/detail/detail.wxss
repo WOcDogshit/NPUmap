@@ -1,0 +1,330 @@
+.page {
+  min-height: 100vh;
+  background: var(--bg);
+}
+
+.card {
+  margin: 24rpx 32rpx 0;
+  background: var(--glass);
+  backdrop-filter: blur(24rpx);
+  -webkit-backdrop-filter: blur(24rpx);
+  border: 1rpx solid rgba(255, 255, 255, 0.65);
+  border-radius: 28rpx;
+  overflow: hidden;
+  box-shadow: 0 8rpx 28rpx rgba(27, 36, 48, 0.08);
+}
+
+.card-body {
+  padding: 36rpx 32rpx 40rpx;
+}
+
+.poi-head {
+  display: flex;
+  align-items: center;
+}
+
+.poi-emoji {
+  width: 104rpx;
+  height: 104rpx;
+  border-radius: 30rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 52rpx;
+  margin-right: 24rpx;
+  flex-shrink: 0;
+}
+
+.emoji-blue   { background: rgba(20, 100, 224, 0.10); }
+.emoji-green  { background: rgba(34, 176, 140, 0.12); }
+.emoji-orange { background: rgba(255, 138, 61, 0.14); }
+.emoji-red    { background: rgba(240, 65, 55, 0.10); }
+.emoji-purple { background: rgba(155, 89, 182, 0.12); }
+
+.fav-btn {
+  width: 76rpx;
+  height: 76rpx;
+  border-radius: 50%;
+  background: var(--soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 42rpx;
+  color: #f5a623;
+  flex-shrink: 0;
+}
+
+.poi-title {
+  flex: 1;
+  min-width: 0;
+}
+
+.poi-name {
+  font-size: 40rpx;
+  font-weight: 700;
+  color: var(--text-strong);
+}
+
+.type-badge {
+  display: inline-block;
+  margin-top: 12rpx;
+  font-size: 22rpx;
+  color: #1464e0;
+  color: var(--c-primary);
+  background: rgba(20, 100, 224, 0.10);
+  background: var(--c-primary-soft);
+  border-radius: 8rpx;
+  padding: 4rpx 16rpx;
+}
+
+.poi-desc {
+  margin-top: 28rpx;
+  font-size: 28rpx;
+  color: var(--text);
+  line-height: 1.7;
+}
+
+.tags {
+  margin-top: 24rpx;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.tag {
+  font-size: 22rpx;
+  color: var(--text-sub);
+  background: var(--soft);
+  border-radius: 10rpx;
+  padding: 8rpx 18rpx;
+  margin: 0 14rpx 14rpx 0;
+}
+
+.info-row {
+  margin-top: 12rpx;
+  padding-top: 24rpx;
+  border-top: 1rpx solid var(--divider);
+  display: flex;
+  align-items: flex-start;
+}
+
+.info-label {
+  font-size: 24rpx;
+  color: var(--text-muted);
+  width: 110rpx;
+  flex-shrink: 0;
+}
+
+.info-value {
+  flex: 1;
+  font-size: 26rpx;
+  color: var(--text);
+  line-height: 1.5;
+}
+
+.btn-nav {
+  margin: 32rpx 32rpx 0;
+  background: linear-gradient(135deg, #1464e0, #0a3c91);
+  background: linear-gradient(135deg, var(--c-primary), var(--c-primary-deep));
+  color: #ffffff;
+  font-size: 32rpx;
+  font-weight: 600;
+  border-radius: 46rpx;
+  height: 92rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10rpx 24rpx rgba(20, 100, 224, 0.28);
+  box-shadow: 0 10rpx 24rpx var(--c-primary-shadow);
+}
+
+.btn-out {
+  margin: 20rpx 32rpx 0;
+  background: var(--card-solid);
+  color: #1464e0;
+  color: var(--c-primary);
+  font-size: 26rpx;
+  border-radius: 46rpx;
+  height: 84rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2rpx solid rgba(20, 100, 224, 0.3);
+  border: 2rpx solid var(--c-primary-border);
+}
+
+.btn-back {
+  margin: 20rpx 32rpx 0;
+  background: transparent;
+  color: var(--text-sub);
+  font-size: 28rpx;
+  height: 80rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ===== 校园评论 ===== */
+.comment-section {
+  margin: 24rpx 32rpx 0;
+  background: var(--card-solid);
+  border-radius: 28rpx;
+  padding: 30rpx;
+  box-shadow: 0 8rpx 28rpx rgba(27, 36, 48, 0.08);
+}
+
+.comment-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.comment-title {
+  font-size: 32rpx;
+  font-weight: 700;
+  color: var(--text-strong);
+}
+
+.comment-count {
+  font-size: 22rpx;
+  color: var(--text-muted);
+}
+
+.comment-empty {
+  padding: 40rpx 0;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 26rpx;
+}
+
+.comment-item {
+  display: flex;
+  padding: 22rpx 0;
+  border-top: 1rpx solid var(--divider);
+}
+
+.comment-avatar {
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: 50%;
+  background: var(--soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32rpx;
+  flex-shrink: 0;
+}
+
+.comment-body {
+  flex: 1;
+  margin-left: 16rpx;
+  min-width: 0;
+}
+
+.comment-text {
+  font-size: 26rpx;
+  color: var(--text);
+  line-height: 1.6;
+}
+
+.comment-img {
+  width: 220rpx;
+  height: 220rpx;
+  border-radius: 16rpx;
+  margin-top: 12rpx;
+  background: var(--soft);
+}
+
+.comment-time {
+  font-size: 20rpx;
+  color: var(--text-muted);
+  margin-top: 10rpx;
+}
+
+.comment-img-preview {
+  position: relative;
+  display: inline-block;
+  margin-top: 16rpx;
+}
+
+.preview-img {
+  width: 140rpx;
+  height: 140rpx;
+  border-radius: 16rpx;
+  background: var(--soft);
+}
+
+.preview-del {
+  position: absolute;
+  top: -12rpx;
+  right: -12rpx;
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 50%;
+  background: rgba(20, 22, 30, 0.75);
+  color: #ffffff;
+  font-size: 22rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.comment-input-bar {
+  display: flex;
+  align-items: center;
+  margin-top: 20rpx;
+}
+
+.comment-input {
+  flex: 1;
+  height: 72rpx;
+  background: var(--soft);
+  border-radius: 36rpx;
+  padding: 0 24rpx;
+  font-size: 26rpx;
+  color: var(--text-strong);
+}
+
+.comment-camera {
+  width: 84rpx;
+  height: 84rpx;
+  margin-left: 12rpx;
+  border-radius: 50%;
+  background: var(--soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 44rpx;
+  flex-shrink: 0;
+}
+
+.comment-send {
+  margin-left: 12rpx;
+  padding: 0 30rpx;
+  height: 72rpx;
+  border-radius: 36rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26rpx;
+  color: #ffffff;
+  background: rgba(20, 100, 224, 0.35);
+  flex-shrink: 0;
+}
+
+.comment-send.on {
+  background: linear-gradient(135deg, var(--c-primary), var(--c-primary-deep));
+  box-shadow: 0 6rpx 16rpx var(--c-primary-shadow);
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 200rpx;
+}
+
+.empty-text {
+  color: var(--text-muted);
+  font-size: 30rpx;
+  margin-bottom: 40rpx;
+}

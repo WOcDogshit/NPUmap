@@ -1,0 +1,129 @@
+<view class="page theme-{{theme}} {{dark ? 'dark' : ''}}">
+  <nav-bar title="更多" showBack theme="{{theme}}" dark="{{dark}}" plain />
+  <!-- 外观主题 -->
+  <view class="group">
+    <view class="group-title">外观主题</view>
+    <view class="card">
+      <view class="theme-row" wx:for="{{themes}}" wx:key="key" data-key="{{item.key}}" bindtap="setTheme">
+        <view class="theme-dot" style="background: {{item.color}}"></view>
+        <view class="theme-info">
+          <view class="theme-name {{item.golden ? 'theme-name-golden' : ''}}">{{item.name}}</view>
+          <view class="theme-desc">{{item.desc}}</view>
+        </view>
+        <text class="theme-check" wx:if="{{theme === item.key}}">✓</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 地图设置 -->
+  <view class="group">
+    <view class="group-title">地图设置</view>
+    <view class="card">
+      <view class="switch-row">
+        <view class="switch-text">
+          <view class="switch-name">显示地点名称</view>
+          <view class="switch-desc">在地图上显示每个地点的名称标签</view>
+        </view>
+        <switch checked="{{showLabels}}" color="#1464e0" bindchange="toggleLabels" />
+      </view>
+      <view class="switch-row">
+        <view class="switch-text">
+          <view class="switch-name">显示公交站图标</view>
+          <view class="switch-desc">在地图上显示公交站、校车站标记</view>
+        </view>
+        <switch checked="{{showBusStops}}" color="#1464e0" bindchange="toggleBusStops" />
+      </view>
+      <view class="switch-row">
+        <view class="switch-text">
+          <view class="switch-name">深色模式</view>
+          <view class="switch-desc">暂不支持深色地图<text class="help-q" catchtap="showDarkHelp">？</text></view>
+        </view>
+        <switch checked="{{dark}}" color="#1464e0" bindchange="toggleDark" />
+      </view>
+    </view>
+  </view>
+
+  <!-- 地图功能 -->
+  <view class="group">
+    <view class="group-title">地图功能</view>
+    <view class="card">
+      <view class="menu-row" bindtap="openNearby">
+        <text class="menu-emoji">📍</text>
+        <text class="menu-name">附近地点</text>
+        <text class="menu-arrow">›</text>
+      </view>
+      <view class="menu-row" bindtap="goSchedule">
+        <text class="menu-emoji">📅</text>
+        <text class="menu-name">我的课表</text>
+        <text class="menu-arrow">›</text>
+      </view>
+      <view class="menu-row" bindtap="goBadges">
+        <text class="menu-emoji">🏅</text>
+        <text class="menu-name">我的徽章</text>
+        <text class="menu-arrow">›</text>
+      </view>
+      <view class="menu-row" bindtap="goAlbum">
+        <text class="menu-emoji">📸</text>
+        <text class="menu-name">校园图鉴</text>
+        <text class="menu-arrow">›</text>
+      </view>
+      <view class="menu-row" bindtap="goFavRoutes">
+        <text class="menu-emoji">🚏</text>
+        <text class="menu-name">常用路线</text>
+        <text class="menu-arrow">›</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 收藏 -->
+  <view class="group">
+    <view class="group-title">我的收藏</view>
+    <view class="card">
+      <view wx:if="{{favorites.length === 0}}" class="empty-tip">还没有收藏，去地点详情页点 ⭐ 收藏</view>
+      <view class="menu-row" wx:for="{{favorites}}" wx:key="id" data-id="{{item.id}}" bindtap="goPoi">
+        <view class="fav-emoji emoji-{{item.color}}">{{item.icon}}</view>
+        <text class="menu-name">{{item.name}}</text>
+        <text class="menu-arrow">›</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 其他 -->
+  <view class="group">
+    <view class="group-title">其他</view>
+    <view class="card">
+      <view class="menu-row" bindtap="clearCache">
+        <text class="menu-emoji">🧹</text>
+        <text class="menu-name">清除缓存</text>
+        <text class="menu-arrow">›</text>
+      </view>
+      <view class="menu-row" bindtap="goAbout">
+        <text class="menu-emoji">ℹ️</text>
+        <text class="menu-name">关于我们</text>
+        <text class="menu-about">内测版 v0.3</text>
+        <text class="menu-arrow">›</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 附近地点弹层 -->
+  <view class="nearby-mask" wx:if="{{nearbyOpen}}" bindtap="closeNearby"></view>
+  <view class="nearby" wx:if="{{nearbyOpen}}">
+    <view class="nearby-head">
+      <text class="nearby-title">附近地点（从近到远）</text>
+      <text class="nearby-close" bindtap="closeNearby">✕</text>
+    </view>
+    <view wx:if="{{nearbyState === 'loading'}}" class="nearby-state">正在定位…</view>
+    <view wx:elif="{{nearbyState === 'error'}}" class="nearby-state">定位失败，请检查定位权限</view>
+    <scroll-view scroll-y class="nearby-list" wx:else>
+      <view class="nearby-item" wx:for="{{nearbyList}}" wx:key="id" data-id="{{item.id}}" bindtap="goPoi">
+        <view class="nearby-rank">{{index + 1}}</view>
+        <view class="nearby-emoji emoji-{{item.color}}">{{item.icon}}</view>
+        <view class="nearby-info">
+          <view class="nearby-name">{{item.name}}</view>
+          <view class="nearby-desc">{{item.type}} · {{item.distText}}</view>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+</view>

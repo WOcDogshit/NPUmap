@@ -1,0 +1,200 @@
+.page {
+  min-height: 100vh;
+  background: var(--bg);
+  padding-bottom: 60rpx;
+}
+
+.about-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 80rpx 40rpx 50rpx;
+}
+
+.logo {
+  width: 140rpx;
+  height: 140rpx;
+  border-radius: 36rpx;
+  overflow: hidden;
+  box-shadow: 0 8rpx 24rpx rgba(0, 0, 0, 0.12);
+}
+
+.logo-img {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* 彩蛋后的解锁提示 */
+.egg-hint {
+  margin-top: 18rpx;
+  font-size: 24rpx;
+  color: var(--text-sub);
+  animation: hint-in 0.4s ease-out;
+}
+
+/* 暗号字符串：紫黄渐变 */
+.hint-grad {
+  background: linear-gradient(135deg, #a855f7, #f59e0b);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-weight: 700;
+}
+
+@keyframes hint-in {
+  from {
+    opacity: 0;
+    transform: translateY(-10rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.app-name {
+  margin-top: 24rpx;
+  font-size: 40rpx;
+  font-weight: 700;
+  color: var(--text-strong);
+}
+
+.app-sub {
+  margin-top: 8rpx;
+  font-size: 26rpx;
+  color: var(--text-sub);
+}
+
+.version {
+  margin-top: 14rpx;
+  font-size: 22rpx;
+  color: var(--text-muted);
+  background: var(--soft);
+  padding: 4rpx 20rpx;
+  border-radius: 20rpx;
+}
+
+.card {
+  margin: 24rpx 28rpx;
+  background: var(--card-solid);
+  border-radius: 24rpx;
+  padding: 30rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.05);
+}
+
+.card-title {
+  font-size: 28rpx;
+  font-weight: 700;
+  color: var(--text-strong);
+  margin-bottom: 16rpx;
+}
+
+.card-text {
+  font-size: 26rpx;
+  line-height: 1.7;
+  color: var(--text);
+}
+
+.feature-row {
+  font-size: 26rpx;
+  color: var(--text);
+  padding: 10rpx 0;
+}
+
+.contact-row {
+  font-size: 26rpx;
+  color: var(--text);
+  padding: 6rpx 0;
+}
+
+.link-group {
+  margin: 32rpx 28rpx;
+  background: var(--card-solid);
+  border-radius: 24rpx;
+  overflow: hidden;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.05);
+}
+
+.link-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28rpx 30rpx;
+  border-bottom: 1rpx solid var(--divider);
+}
+
+.link-row:last-child {
+  border-bottom: none;
+}
+
+.link-name {
+  font-size: 28rpx;
+  color: var(--text-strong);
+}
+
+.link-arrow {
+  font-size: 32rpx;
+  color: var(--text-muted);
+}
+
+.footer {
+  text-align: center;
+  font-size: 22rpx;
+  color: var(--text-muted);
+  margin-top: 40rpx;
+}
+
+/* 彩蛋弹层 */
+.egg-mask {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(10, 14, 22, 0.55);
+  z-index: 900;
+}
+
+.egg-card {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 560rpx;
+  background: var(--glass-strong);
+  backdrop-filter: blur(20rpx);
+  border-radius: 36rpx;
+  padding: 70rpx 40rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 901;
+  box-shadow: 0 20rpx 60rpx rgba(0, 0, 0, 0.25);
+  animation: egg-pop 0.35s ease-out;
+}
+
+.egg-text {
+  font-size: 44rpx;
+  font-weight: 700;
+  color: var(--text-strong);
+  text-align: center;
+  letter-spacing: 2rpx;
+}
+
+.egg-sub {
+  margin-top: 30rpx;
+  font-size: 22rpx;
+  color: var(--text-muted);
+}
+
+@keyframes egg-pop {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.7);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}

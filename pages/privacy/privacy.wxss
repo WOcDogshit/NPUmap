@@ -1,0 +1,46 @@
+.page {
+  min-height: 100vh;
+  background: var(--bg);
+  padding-bottom: 80rpx;
+}
+
+.doc {
+  margin: 24rpx 28rpx;
+  background: var(--card-solid);
+  border-radius: 24rpx;
+  padding: 36rpx 34rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.05);
+}
+
+.doc-title {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: var(--text-strong);
+  text-align: center;
+  margin-bottom: 12rpx;
+}
+
+.doc-date {
+  text-align: center;
+  font-size: 22rpx;
+  color: var(--text-muted);
+  margin-bottom: 28rpx;
+}
+
+.section {
+  margin-bottom: 30rpx;
+}
+
+.section-title {
+  font-size: 28rpx;
+  font-weight: 700;
+  color: var(--text-strong);
+  margin-bottom: 10rpx;
+}
+
+.section-text {
+  font-size: 25rpx;
+  line-height: 1.8;
+  color: var(--text);
+  white-space: pre-line;
+}

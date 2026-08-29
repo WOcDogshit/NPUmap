@@ -1,0 +1,92 @@
+.page {
+  min-height: 100vh;
+  background: var(--bg);
+  padding-bottom: 80rpx;
+}
+
+.album-head {
+  margin: 24rpx 28rpx 8rpx;
+}
+
+.album-title {
+  font-size: 40rpx;
+  font-weight: 700;
+  color: var(--text-strong);
+}
+
+.album-sub {
+  margin-top: 6rpx;
+  font-size: 22rpx;
+  color: var(--text-muted);
+}
+
+.album-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 160rpx 60rpx;
+}
+
+.empty-icon {
+  font-size: 100rpx;
+}
+
+.empty-text {
+  margin-top: 24rpx;
+  font-size: 30rpx;
+  color: var(--text-strong);
+  font-weight: 600;
+}
+
+.empty-hint {
+  margin-top: 12rpx;
+  font-size: 24rpx;
+  color: var(--text-muted);
+  text-align: center;
+  line-height: 1.6;
+}
+
+.album-group {
+  margin: 24rpx 28rpx;
+  background: var(--card-solid);
+  border-radius: 24rpx;
+  padding: 26rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.05);
+}
+
+.group-head {
+  display: flex;
+  align-items: baseline;
+  margin-bottom: 18rpx;
+}
+
+.group-name {
+  font-size: 30rpx;
+  font-weight: 700;
+  color: var(--text-strong);
+}
+
+.group-campus {
+  margin-left: 12rpx;
+  font-size: 20rpx;
+  color: var(--text-muted);
+}
+
+.group-count {
+  margin-left: auto;
+  font-size: 20rpx;
+  color: var(--text-muted);
+}
+
+.img-grid {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.grid-img {
+  width: 212rpx;
+  height: 212rpx;
+  border-radius: 16rpx;
+  margin: 0 12rpx 12rpx 0;
+  background: var(--soft);
+}

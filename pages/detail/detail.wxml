@@ -1,0 +1,76 @@
+<view class="page theme-{{theme}} {{dark ? 'dark' : ''}}" wx:if="{{poi}}">
+  <nav-bar title="{{navTitle}}" showBack theme="{{theme}}" dark="{{dark}}" />
+  <view class="card">
+    <view class="card-body">
+      <view class="poi-head">
+        <view class="poi-emoji emoji-{{poi.color}}">{{poi.icon}}</view>
+        <view class="poi-title">
+          <view class="poi-name">{{poi.name}}</view>
+          <text class="type-badge">{{poi.type}}</text>
+        </view>
+        <view class="fav-btn" bindtap="toggleFav">{{isFav ? '★' : '☆'}}</view>
+      </view>
+
+      <view class="poi-desc">{{poi.description}}</view>
+
+      <view class="tags">
+        <text class="tag" wx:for="{{poi.tags}}" wx:key="*this">#{{item}}</text>
+      </view>
+
+      <view class="info-row">
+        <text class="info-label">🏫 校区</text>
+        <text class="info-value">{{campusName}}</text>
+      </view>
+      <view class="info-row">
+        <text class="info-label">📍 位置</text>
+        <text class="info-value">{{poi.address}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="btn-nav" bindtap="goRoute">🚶 查看校内路线</view>
+  <view class="btn-out" bindtap="navigate">备用：腾讯地图导航（会跳出去）</view>
+  <!-- 校园评论 -->
+  <view class="comment-section">
+    <view class="comment-head">
+      <text class="comment-title">校园评论</text>
+      <text class="comment-count">{{comments.length}} 条</text>
+    </view>
+
+    <view wx:if="{{comments.length === 0}}" class="comment-empty">还没有评论，来说两句吧～</view>
+
+    <view class="comment-item" wx:for="{{comments}}" wx:key="id" bindlongpress="deleteComment" data-id="{{item.id}}">
+      <view class="comment-avatar">🧑‍🎓</view>
+      <view class="comment-body">
+        <view class="comment-text" wx:if="{{item.text}}">{{item.text}}</view>
+        <image wx:if="{{item.image}}" class="comment-img" src="{{item.image}}" mode="aspectFill" bindtap="previewCommentImg" data-src="{{item.image}}" />
+        <view class="comment-time">{{item.timeText}}</view>
+      </view>
+    </view>
+
+    <view class="comment-img-preview" wx:if="{{commentImage}}">
+      <image class="preview-img" src="{{commentImage}}" mode="aspectFill" />
+      <view class="preview-del" bindtap="removeCommentImg">✕</view>
+    </view>
+
+    <view class="comment-input-bar">
+      <input
+        class="comment-input"
+        placeholder="说说这里怎么样…"
+        value="{{commentText}}"
+        bindinput="onCommentInput"
+        confirm-type="send"
+        bindconfirm="addComment"
+        maxlength="200"
+      />
+      <view class="comment-camera" bindtap="chooseCommentImg">📹</view>
+      <view class="comment-send {{commentText || commentImage ? 'on' : ''}}" bindtap="addComment">发送</view>
+    </view>
+  </view>
+</view>
+
+<view class="page theme-{{theme}} {{dark ? 'dark' : ''}} empty" wx:else>
+  <nav-bar title="地点详情" showBack theme="{{theme}}" />
+  <view class="empty-text">没有找到这个地点</view>
+  <view class="btn-back" bindtap="back">返回地图</view>
+</view>

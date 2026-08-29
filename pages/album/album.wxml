@@ -1,0 +1,35 @@
+<view class="page theme-{{theme}} {{dark ? 'dark' : ''}}">
+  <nav-bar title="校园图鉴" showBack theme="{{theme}}" dark="{{dark}}" plain />
+
+  <view class="album-head" wx:if="{{groups.length}}">
+    <view class="album-title">📸 校园图鉴</view>
+    <view class="album-sub">共 {{total}} 张地点实拍 · 来自同学们的评论</view>
+  </view>
+
+  <view wx:if="{{groups.length === 0}}" class="album-empty">
+    <view class="empty-icon">🖼️</view>
+    <view class="empty-text">还没有照片</view>
+    <view class="empty-hint">去地点详情发一条带图的评论，就会出现在这里</view>
+  </view>
+
+  <view class="album-group" wx:for="{{groups}}" wx:key="poiId">
+    <view class="group-head">
+      <text class="group-name">{{item.poiName}}</text>
+      <text class="group-campus" wx:if="{{item.campus}}">{{item.campus}}</text>
+      <text class="group-count">{{item.images.length}} 张</text>
+    </view>
+    <view class="img-grid">
+      <image
+        class="grid-img"
+        wx:for="{{item.images}}"
+        wx:for-item="img"
+        wx:key="*this"
+        src="{{img}}"
+        mode="aspectFill"
+        bindtap="preview"
+        data-src="{{img}}"
+        data-urls="{{item.images}}"
+      />
+    </view>
+  </view>
+</view>

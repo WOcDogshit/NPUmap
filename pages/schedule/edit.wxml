@@ -1,5 +1,7 @@
+<nav-bar title="{{navTitle}}" showBack theme="{{theme}}" dark="{{dark}}" />
 <view class="page theme-{{theme}} {{dark ? 'dark' : ''}}">
-  <nav-bar title="{{navTitle}}" showBack theme="{{theme}}" dark="{{dark}}" />
+
+  
   <view class="card">
     <view class="form-row">
       <text class="form-label">课程名</text>

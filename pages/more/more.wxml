@@ -1,5 +1,7 @@
+<nav-bar title="更多" showBack theme="{{theme}}" dark="{{dark}}" plain />
 <view class="page theme-{{theme}} {{dark ? 'dark' : ''}}">
-  <nav-bar title="更多" showBack theme="{{theme}}" dark="{{dark}}" plain />
+
+  
   <!-- 外观主题 -->
   <view class="group">
     <view class="group-title">外观主题</view>

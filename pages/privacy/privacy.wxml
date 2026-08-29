@@ -1,5 +1,7 @@
+<nav-bar title="隐私政策" showBack theme="{{theme}}" dark="{{dark}}" plain />
 <view class="page theme-{{theme}} {{dark ? 'dark' : ''}}">
-  <nav-bar title="隐私政策" showBack theme="{{theme}}" dark="{{dark}}" plain />
+
+  
 
   <view class="doc">
     <view class="doc-title">隐私政策</view>

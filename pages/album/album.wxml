@@ -1,5 +1,7 @@
+<nav-bar title="校园图鉴" showBack theme="{{theme}}" dark="{{dark}}" plain />
 <view class="page theme-{{theme}} {{dark ? 'dark' : ''}}">
-  <nav-bar title="校园图鉴" showBack theme="{{theme}}" dark="{{dark}}" plain />
+
+  
 
   <view class="album-head" wx:if="{{groups.length}}">
     <view class="album-title">📸 校园图鉴</view>

@@ -1,5 +1,7 @@
+<nav-bar title="{{navTitle}}" showBack theme="{{theme}}" dark="{{dark}}" />
 <view class="page theme-{{theme}} {{dark ? 'dark' : ''}}">
-  <nav-bar title="{{navTitle}}" showBack theme="{{theme}}" dark="{{dark}}" />
+
+  
   <!-- 路线地图 -->
   <map
     class="route-map"

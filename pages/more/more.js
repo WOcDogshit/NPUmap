@@ -64,7 +64,9 @@ Page({
   },
 
   buildFavorites() {
-    const ids = app.globalData.favorites || []
+    // 防御：本地收藏数据异常时（非数组）直接返回空，避免整页白屏
+    const ids = app.globalData.favorites
+    if (!Array.isArray(ids)) return []
     return ids.map(id => poisData.pois.find(p => p.id === id)).filter(Boolean)
   },
 

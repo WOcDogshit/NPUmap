@@ -1,5 +1,6 @@
-<nav-bar title="常用路线" showBack theme="{{theme}}" dark="{{dark}}" plain />
 <view class="page theme-{{theme}} {{dark ? 'dark' : ''}}">
+  <nav-bar title="常用路线" showBack theme="{{theme}}" dark="{{dark}}" plain />
+  
 
   
 

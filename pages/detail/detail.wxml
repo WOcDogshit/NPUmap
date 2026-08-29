@@ -1,5 +1,6 @@
-<nav-bar title="{{navTitle}}" showBack theme="{{theme}}" dark="{{dark}}" />
 <view class="page theme-{{theme}} {{dark ? 'dark' : ''}}" wx:if="{{poi}}">
+  <nav-bar title="{{navTitle}}" showBack theme="{{theme}}" dark="{{dark}}" />
+  
 
   
   <view class="card">

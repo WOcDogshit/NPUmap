@@ -1,6 +1,7 @@
-<nav-bar title="NPUmap" theme="{{theme}}" dark="{{dark}}" />
-<!-- 渐变导航栏 -->
-  <view class="page theme-{{theme}} {{dark ? 'dark' : ''}}">
+<view class="page theme-{{theme}} {{dark ? 'dark' : ''}}">
+  <nav-bar title="NPUmap" theme="{{theme}}" dark="{{dark}}" />
+  <!-- 渐变导航栏 -->
+  
 
   
 

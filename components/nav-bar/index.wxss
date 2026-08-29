@@ -1,5 +1,9 @@
 .nav-bar {
   position: relative;
+  /* 铺满整个屏幕宽度：突破页面内容的左右留白，让渐变背景始终贴到屏幕边缘 */
+  left: 50%;
+  margin-left: -50vw;
+  width: 100vw;
   z-index: 100;
 }
 

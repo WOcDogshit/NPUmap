@@ -11,7 +11,7 @@
     <view class="egg-hint" wx:if="{{eggHint}}">试试输入 <text class="hint-grad">爱上雷神</text> 或 <text class="hint-grad">33550336</text>？</view>
     <view class="app-name">NPUmap · 校园地图</view>
     <view class="app-sub">西北工业大学 · 长安 & 友谊双校区</view>
-    <view class="version">内测版 v0.3</view>
+    <view class="version">内测版 v0.4</view>
   </view>
 
   <view class="card">

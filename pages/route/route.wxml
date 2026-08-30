@@ -68,12 +68,12 @@
     </view>
   </view>
   <!-- 导航模式：顶部信息卡（可收起，收起后地图更大） -->
-  <view class="nav-top-card" style="top: {{navStatusBar}}px" wx:else>
+  <view class="nav-top-card" style="top: {{navCardTop}}px" wx:else>
     <view class="nav-card-head">
       <view class="nav-title">{{routeMode === 'bicycling' ? '🚴 骑行导航中' : '🚶 步行导航中'}}</view>
       <view class="nav-card-collapse" bindtap="toggleNavCard">{{navCardOpen ? '收起 ▾' : '展开 ▴'}}</view>
     </view>
-    <view wx:if="{{navCardOpen}}" class="nav-instruction">{{navInstruction}}</view>
+    <view class="nav-instruction">{{navInstruction}}</view>
     <view wx:if="{{navCardOpen}}" class="nav-meta">
       <text class="nav-remain">{{navRemainDist}}</text>
       <text class="nav-sep">·</text>

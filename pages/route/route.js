@@ -82,10 +82,12 @@ Page({
     navRemainMin: '',
     // 地图固定北向上（放弃朝向旋转）
     rotate: 0,
-    // 顶部导航信息卡：默认收起（不遮挡地图）
-    navCardOpen: false,
+    // 顶部导航信息卡：默认展开（显示当前路线指引）
+    navCardOpen: true,
     // 是否显示系统定位蓝点（导航中用放大图标替代）
     showLocation: true,
+    // 顶部卡片顶部位置（避开右上角胶囊按钮）
+    navCardTop: 0,
     // 状态栏高度（顶部导航卡避开状态栏）
     navStatusBar: 20,
     // 深色地图（地图个性化样式）：微信小程序的官方高级能力，当前未开通，地图底图保持浅色。
@@ -100,7 +102,8 @@ Page({
     const dark = app.globalData.darkMode
     // 顶部导航卡需要避开手机状态栏
     const winInfo = wx.getWindowInfo ? wx.getWindowInfo() : wx.getSystemInfoSync()
-    this.setData({ navStatusBar: winInfo.statusBarHeight || 20 })
+    const sb = winInfo.statusBarHeight || 20
+    this.setData({ navStatusBar: sb, navCardTop: sb + 46 })
     app.setThemeNav(theme)
     const to = poisData.pois.find(p => p.id === options.toId) || null
     this.setData({ to })
@@ -317,9 +320,36 @@ Page({
         latitude: from ? from.latitude : to.latitude,
         longitude: from ? from.longitude : to.longitude,
         iconPath: this.data.routeMode === 'bicycling' ? '/images/marker-bike.png' : '/images/marker-walk.png',
-        width: 68,
-        height: 68,
+        width: 60,
+        height: 60,
         anchor: { x: 0.5, y: 0.5 }
+      })
+    }
+    // 方向箭头：显示在位置上方，随手机朝向旋转
+    if (!markers.some(m => m.id === 1)) {
+      markers.push({
+        id: 1,
+        latitude: (from ? from.latitude : to.latitude) + 0.00006,
+        longitude: from ? from.longitude : to.longitude,
+        iconPath: '/images/marker-dir.png',
+        width: 44,
+        height: 44,
+        anchor: { x: 0.5, y: 0.5 },
+        rotation: 0
+      })
+    }
+    // 开启罗盘：更新方向箭头，指示手机朝向
+    if (wx.startCompass) wx.startCompass({ fail: () => {} })
+    if (wx.onCompassChange) {
+      wx.onCompassChange((res) => {
+        if (this.data.navMode && typeof res.direction === 'number') {
+          const ms = this.data.markers.slice()
+          const di = ms.findIndex(m => m.id === 1)
+          if (di > -1) {
+            ms[di] = Object.assign({}, ms[di], { rotation: res.direction % 360 })
+            this.setData({ markers: ms })
+          }
+        }
       })
     }
     this.setData({
@@ -373,8 +403,10 @@ Page({
   stopNav() {
     if (wx.stopLocationUpdate) wx.stopLocationUpdate({ fail: () => {} })
     if (wx.offLocationChange) wx.offLocationChange()
-    // 移除放大的当前位置图标，恢复系统定位点
-    const markers = (this.data.markers || []).filter(m => m.id !== 0)
+    if (wx.stopCompass) wx.stopCompass({ fail: () => {} })
+    if (wx.offCompassChange) wx.offCompassChange()
+    // 移除放大的位置图标和方向箭头，恢复系统定位点
+    const markers = (this.data.markers || []).filter(m => m.id !== 0 && m.id !== 1)
     this.setData({ navMode: false, scale: 15, rotate: 0, showLocation: true, markers })
   },
 
@@ -391,12 +423,12 @@ Page({
     const remainText = r.remain >= 1000
       ? (r.remain / 1000).toFixed(1) + ' 公里'
       : Math.max(1, Math.round(r.remain)) + ' 米'
-    // 更新放大的当前位置图标
+    // 更新放大的当前位置图标和方向箭头
     const markers = this.data.markers.slice()
-    const li = markers.findIndex(m => m.id === 0)
-    if (li > -1) {
-      markers[li] = Object.assign({}, markers[li], { latitude: cur.latitude, longitude: cur.longitude })
-    }
+    markers.forEach(m => {
+      if (m.id === 0) Object.assign(m, { latitude: cur.latitude, longitude: cur.longitude })
+      if (m.id === 1) Object.assign(m, { latitude: cur.latitude + 0.00006, longitude: cur.longitude })
+    })
     // 只跟随位置，不重置缩放级别（用户手动放大后保持）；地图固定北向上
     this.setData({
       center: cur,

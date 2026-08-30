@@ -83,6 +83,10 @@ Page({
     // 导航地图朝向：heading=前进方向朝上（跟随），north=北向上
     navHeadingMode: 'heading',
     rotate: 0,
+    // 顶部导航信息卡：默认展开；收起后地图更大
+    navCardOpen: true,
+    // 状态栏高度（顶部导航卡避开状态栏）
+    navStatusBar: 20,
     // 深色地图（地图个性化样式）：微信小程序的官方高级能力，当前未开通，地图底图保持浅色。
     // 如以后在微信公众平台「地图个性化样式」中配置好样式，
     // 把样式绑定的 key 填到 mapSubkey，并把 mapLayerStyle 设为 1（1 = 微信深色样式）。
@@ -93,6 +97,9 @@ Page({
   onLoad(options) {
     const theme = app.globalData.theme || 'lake'
     const dark = app.globalData.darkMode
+    // 顶部导航卡需要避开手机状态栏
+    const winInfo = wx.getWindowInfo ? wx.getWindowInfo() : wx.getSystemInfoSync()
+    this.setData({ navStatusBar: winInfo.statusBarHeight || 20 })
     app.setThemeNav(theme)
     const to = poisData.pois.find(p => p.id === options.toId) || null
     this.setData({ to })
@@ -342,6 +349,11 @@ Page({
     if (mode === 'heading' && this._lastNavLoc && typeof this._lastNavLoc.heading === 'number') {
       this.setData({ rotate: (360 - this._lastNavLoc.heading) % 360 })
     }
+  },
+
+  // 收起 / 展开顶部导航信息卡（收起后地图可视区域更大）
+  toggleNavCard() {
+    this.setData({ navCardOpen: !this.data.navCardOpen })
   },
 
   // 定位变化：地图跟随 + 判断当前走到哪一步 + 更新剩余距离

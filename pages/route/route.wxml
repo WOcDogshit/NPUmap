@@ -71,22 +71,27 @@
       </view>
     </view>
   </view>
-  <view class="panel nav-panel" wx:else>
-    <view class="nav-head">
+  <!-- 导航模式：顶部信息卡（可收起，收起后地图更大） -->
+  <view class="nav-top-card" style="padding-top: {{navStatusBar}}px" wx:else>
+    <view class="nav-card-head">
       <view class="nav-title">{{routeMode === 'bicycling' ? '🚴 骑行导航中' : '🚶 步行导航中'}}</view>
-      <view class="nav-exit" bindtap="stopNav">退出导航</view>
+      <view class="nav-card-collapse" bindtap="toggleNavCard">{{navCardOpen ? '收起 ▾' : '展开 ▴'}}</view>
     </view>
-    <view class="nav-heading">
-      <view class="heading-tab {{navHeadingMode === 'heading' ? 'active' : ''}}" data-mode="heading" bindtap="switchHeadingMode">🧭 前进朝上</view>
-      <view class="heading-tab {{navHeadingMode === 'north' ? 'active' : ''}}" data-mode="north" bindtap="switchHeadingMode">⬆️ 北向上</view>
-    </view>
-    <view class="nav-instruction">{{navInstruction}}</view>
-    <view class="nav-meta">
+    <view wx:if="{{navCardOpen}}" class="nav-instruction">{{navInstruction}}</view>
+    <view wx:if="{{navCardOpen}}" class="nav-meta">
       <text class="nav-remain">{{navRemainDist}}</text>
       <text class="nav-sep">·</text>
       <text class="nav-time">{{navRemainMin}}</text>
     </view>
-    <view class="nav-hint">{{routeMode === 'bicycling' ? '骑行请留意路况，到路口前会提醒你' : '地图会跟着你移动，到路口前会提醒你'}}</view>
+    <view wx:if="{{navCardOpen}}" class="nav-heading">
+      <view class="heading-tab {{navHeadingMode === 'heading' ? 'active' : ''}}" data-mode="heading" bindtap="switchHeadingMode">🧭 前进朝上</view>
+      <view class="heading-tab {{navHeadingMode === 'north' ? 'active' : ''}}" data-mode="north" bindtap="switchHeadingMode">⬆️ 北向上</view>
+    </view>
+  </view>
+
+  <!-- 导航模式：底部退出按钮 -->
+  <view class="nav-bottom-exit" wx:if="{{navMode}}">
+    <view class="nav-exit-btn" bindtap="stopNav">退出导航</view>
   </view>
 
   <!-- 起点选择弹层 -->

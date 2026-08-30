@@ -480,3 +480,59 @@
   background: var(--c-primary);
 }
 
+
+/* 导航顶部信息卡（悬浮在地图上方） */
+.nav-top-card {
+  position: absolute;
+  top: 0;
+  left: 16rpx;
+  right: 16rpx;
+  z-index: 30;
+  background: var(--glass-strong);
+  backdrop-filter: blur(24rpx);
+  -webkit-backdrop-filter: blur(24rpx);
+  border: 1rpx solid rgba(255, 255, 255, 0.65);
+  border-radius: 28rpx;
+  padding-left: 28rpx;
+  padding-right: 28rpx;
+  padding-bottom: 24rpx;
+  box-shadow: 0 6rpx 24rpx rgba(27, 36, 48, 0.15);
+}
+
+.nav-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 16rpx;
+}
+
+.nav-card-collapse {
+  font-size: 24rpx;
+  color: var(--text-muted);
+  padding: 8rpx 12rpx;
+}
+
+
+/* 底部退出导航按钮 */
+.nav-bottom-exit {
+  position: absolute;
+  left: 32rpx;
+  right: 32rpx;
+  bottom: calc(40rpx + constant(safe-area-inset-bottom));
+  bottom: calc(40rpx + env(safe-area-inset-bottom));
+  z-index: 30;
+}
+
+.nav-exit-btn {
+  height: 92rpx;
+  border-radius: 46rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30rpx;
+  font-weight: 700;
+  color: #ffffff;
+  background: #f04137;
+  box-shadow: 0 10rpx 24rpx rgba(240, 65, 55, 0.35);
+}
+

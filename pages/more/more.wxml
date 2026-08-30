@@ -9,6 +9,13 @@
       <text>外观主题</text>
       <view class="chevron {{themeOpen ? 'up' : ''}}"></view>
     </view>
+    <view class="card collapse-card" wx:if="{{!themeOpen}}" bindtap="toggleThemeOpen">
+      <view class="menu-row">
+        <text class="menu-emoji">🎨</text>
+        <text class="menu-name">选择主题配色</text>
+        <text class="menu-arrow">›</text>
+      </view>
+    </view>
     <view class="card" wx:if="{{themeOpen}}">
       <view class="theme-row" wx:for="{{themes}}" wx:key="key" data-key="{{item.key}}" bindtap="setTheme">
         <view class="theme-dot" style="background: {{item.color}}"></view>
@@ -54,6 +61,13 @@
     <view class="group-title group-toggle" bindtap="toggleTypesOpen">
       <text>图标管理</text>
       <view class="chevron {{typesOpen ? 'up' : ''}}"></view>
+    </view>
+    <view class="card collapse-card" wx:if="{{!typesOpen}}" bindtap="toggleTypesOpen">
+      <view class="menu-row">
+        <text class="menu-emoji">🗂️</text>
+        <text class="menu-name">管理地图图标分类</text>
+        <text class="menu-arrow">›</text>
+      </view>
     </view>
     <view class="card" wx:if="{{typesOpen}}">
       <view class="type-row" wx:for="{{types}}" wx:key="type">

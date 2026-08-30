@@ -1,7 +1,8 @@
 .page {
   min-height: 100vh;
   background: var(--bg);
-  padding: 24rpx 24rpx 140rpx;
+  padding: 24rpx 24rpx calc(140rpx + constant(safe-area-inset-bottom));
+  padding: 24rpx 24rpx calc(140rpx + env(safe-area-inset-bottom));
   box-sizing: border-box;
 }
 
@@ -124,7 +125,8 @@
 .add-btn {
   position: fixed;
   right: 40rpx;
-  bottom: 60rpx;
+  bottom: calc(60rpx + constant(safe-area-inset-bottom));
+  bottom: calc(60rpx + env(safe-area-inset-bottom));
   width: 104rpx;
   height: 104rpx;
   border-radius: 50%;

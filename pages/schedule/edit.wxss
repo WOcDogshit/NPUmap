@@ -1,7 +1,8 @@
 .page {
   min-height: 100vh;
   background: var(--bg);
-  padding: 32rpx;
+  padding: 32rpx 32rpx calc(32rpx + constant(safe-area-inset-bottom));
+  padding: 32rpx 32rpx calc(32rpx + env(safe-area-inset-bottom));
   box-sizing: border-box;
 }
 

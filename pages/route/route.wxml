@@ -48,7 +48,10 @@
           <view class="step-line"></view>
           <view class="step-dot"></view>
         </view>
-        <view class="step-text">{{item.instruction}}</view>
+        <view class="step-text">
+          <text class="step-desc">{{item.instruction}}</text>
+          <text class="step-dist" wx:if="{{item.distance > 0}}">{{item.distance}} 米</text>
+        </view>
       </view>
     </scroll-view>
 

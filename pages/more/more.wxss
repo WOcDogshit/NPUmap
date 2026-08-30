@@ -1,7 +1,8 @@
 .page {
   min-height: 100vh;
   background: var(--bg);
-  padding: 24rpx 24rpx 60rpx;
+  padding: 24rpx 24rpx calc(60rpx + constant(safe-area-inset-bottom));
+  padding: 24rpx 24rpx calc(60rpx + env(safe-area-inset-bottom));
   box-sizing: border-box;
 }
 
@@ -207,7 +208,8 @@
   position: fixed;
   left: 16rpx;
   right: 16rpx;
-  bottom: 16rpx;
+  bottom: calc(16rpx + constant(safe-area-inset-bottom));
+  bottom: calc(16rpx + env(safe-area-inset-bottom));
   z-index: 41;
   background: var(--glass);
   backdrop-filter: blur(24rpx);

@@ -85,6 +85,7 @@ Page({
         this.loadRoute()
       },
       fail: () => {
+        wx.showToast({ title: '未能获取定位，已用校门作起点', icon: 'none' })
         const campusId = this.data.to ? this.data.to.campus : 'changan'
         const gate = poisData.pois.find(p => p.type === '校门' && p.campus === campusId) ||
           poisData.pois.find(p => p.campus === campusId) ||
@@ -143,6 +144,11 @@ Page({
         durationMin: Math.max(1, Math.round(r.duration / 60)),
         markers,
         center: r.polyline.length ? r.polyline[Math.floor(r.polyline.length / 2)] : { latitude: to.latitude, longitude: to.longitude },
+        // 让地图自动缩放，完整显示起点到终点的整条路线
+        includePoints: [
+          { latitude: from.latitude, longitude: from.longitude },
+          { latitude: to.latitude, longitude: to.longitude }
+        ],
         routeFaved: this.isFaved()
       })
     }).catch((e) => {

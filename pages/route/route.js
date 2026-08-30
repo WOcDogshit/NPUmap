@@ -132,6 +132,26 @@ Page({
     const dark = app.globalData.darkMode
     app.setThemeNav(theme)
     this.setData({ theme, dark })
+    // 导航中从后台回到页面：恢复持续定位
+    if (this.data.navMode && this._pausedNav) {
+      this._pausedNav = false
+      wx.startLocationUpdate({
+        success: () => {
+          wx.onLocationChange((res) => this.onNavLocation(res))
+          wx.getLocation({ type: 'gcj02', success: (res) => this.onNavLocation(res), fail: () => {} })
+        },
+        fail: () => {}
+      })
+    }
+  },
+
+  // 页面隐藏（切后台/切走）时暂停持续定位，避免长时间后台定位导致问题
+  onHide() {
+    if (this.data.navMode) {
+      this._pausedNav = true
+      if (wx.stopLocationUpdate) wx.stopLocationUpdate({ fail: () => {} })
+      if (wx.offLocationChange) wx.offLocationChange()
+    }
   },
 
   // 起点：优先用实时定位；定位失败就用正门
@@ -382,6 +402,11 @@ Page({
   // 定位变化：地图跟随 + 判断当前走到哪一步 + 更新剩余距离
   onNavLocation(res) {
     const cur = { latitude: res.latitude, longitude: res.longitude }
+    // 位置变化很小（<5米）时不刷新，减少地图渲染压力
+    if (this._lastNavCur) {
+      if (navDist(this._lastNavCur, cur) < 5) return
+    }
+    this._lastNavCur = cur
     const r = this.calcNav(cur)
     if (!r) return
     const remainText = r.remain >= 1000

@@ -109,11 +109,11 @@
     </view>
     <view class="types-hint">选择在地图上显示的图标分类</view>
     <scroll-view scroll-y class="types-list">
-      <view class="type-row" wx:for="{{poiTypes}}" wx:key="type">
+      <view class="type-row" wx:for="{{poiTypes}}" wx:key="type" data-type="{{item.type}}" bindtap="togglePoiType" hover-class="type-row-hover" hover-stay-time="120">
         <view class="type-emoji">{{item.icon}}</view>
         <text class="type-name">{{item.type}}</text>
         <text class="type-count">{{item.count}} 个</text>
-        <view class="type-switch {{hiddenTypes.indexOf(item.type) === -1 ? 'on' : ''}}" data-type="{{item.type}}" bindtap="togglePoiType">
+        <view class="type-switch {{hiddenTypes.indexOf(item.type) === -1 ? 'on' : ''}}">
           <view class="type-knob"></view>
         </view>
       </view>

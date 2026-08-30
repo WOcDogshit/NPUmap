@@ -196,115 +196,115 @@ module.exports = {
       tags: ["运动","篮球"], color: 'purple'
     },
     {
-      id: 'p29', campus: 'changan', name: '网球场', type: '运动', icon: '🎾',
+      id: 'p29', campus: 'changan', name: '网球场', type: '运动', icon: '⚽',
       latitude: 34.03422, longitude: 108.76958,
       address: '翱翔体育馆东侧', description: '网球场（坐标估算，待实测）',
       tags: ["运动","网球"], color: 'purple'
     },
     {
-      id: 'p30', campus: 'changan', name: '健身房', type: '运动', icon: '💪',
+      id: 'p30', campus: 'changan', name: '健身房', type: '运动', icon: '🏊',
       latitude: 34.03102, longitude: 108.76172,
       address: '翱翔游泳馆附近', description: '校内健身房，通常和游泳馆配套（坐标估算，待实测）',
       tags: ["运动","健身"], color: 'purple'
     },
     {
-      id: 'p31', campus: 'changan', name: '航天学院', type: '学院', icon: '🚀',
+      id: 'p31', campus: 'changan', name: '航天学院', type: '学院', icon: '🏛️',
       latitude: 34.03822, longitude: 108.76682,
       address: '校区东北侧三航区', description: '航天学院（飞天楼），三航特色学院之一（坐标估算，待实测）',
       tags: ["学院","航天","三航"], color: 'blue'
     },
     {
-      id: 'p32', campus: 'changan', name: '航空学院', type: '学院', icon: '✈️',
+      id: 'p32', campus: 'changan', name: '航空学院', type: '学院', icon: '🏛️',
       latitude: 34.03791, longitude: 108.76562,
       address: '校区东北侧三航区', description: '航空学院，三航特色学院之一（坐标估算，待实测）',
       tags: ["学院","航空","三航"], color: 'blue'
     },
     {
-      id: 'p33', campus: 'changan', name: '航海学院', type: '学院', icon: '🚢',
+      id: 'p33', campus: 'changan', name: '航海学院', type: '学院', icon: '🏛️',
       latitude: 34.03752, longitude: 108.76444,
       address: '校区北侧三航区', description: '航海学院，三航特色学院之一（坐标估算，待实测）',
       tags: ["学院","航海","三航"], color: 'blue'
     },
     {
-      id: 'p34', campus: 'changan', name: '自动化学院', type: '学院', icon: '🤖',
+      id: 'p34', campus: 'changan', name: '自动化学院', type: '学院', icon: '🏛️',
       latitude: 34.03132, longitude: 108.76272,
       address: '教学西楼附近', description: '自动化学院（坐标估算，待实测）',
       tags: ["学院","自动化"], color: 'blue'
     },
     {
-      id: 'p35', campus: 'changan', name: '电子信息学院', type: '学院', icon: '📡',
+      id: 'p35', campus: 'changan', name: '电子信息学院', type: '学院', icon: '🏛️',
       latitude: 34.03172, longitude: 108.76352,
       address: '教学区西侧', description: '电子信息学院（坐标估算，待实测）',
       tags: ["学院","电子信息"], color: 'blue'
     },
     {
-      id: 'p36', campus: 'changan', name: '计算机学院', type: '学院', icon: '💻',
+      id: 'p36', campus: 'changan', name: '计算机学院', type: '学院', icon: '🏛️',
       latitude: 34.03402, longitude: 108.76602,
       address: '教学区东侧', description: '计算机学院（坐标估算，待实测）',
       tags: ["学院","计算机"], color: 'blue'
     },
     {
-      id: 'p37', campus: 'changan', name: '软件学院', type: '学院', icon: '🧑‍💻',
+      id: 'p37', campus: 'changan', name: '软件学院', type: '学院', icon: '🏛️',
       latitude: 34.03362, longitude: 108.76642,
       address: '教学区东侧', description: '软件学院（坐标估算，待实测）',
       tags: ["学院","软件"], color: 'blue'
     },
     {
-      id: 'p38', campus: 'changan', name: '材料学院', type: '学院', icon: '🧪',
+      id: 'p38', campus: 'changan', name: '材料学院', type: '学院', icon: '🏛️',
       latitude: 34.03322, longitude: 108.76712,
       address: '教学区东侧', description: '材料学院（坐标估算，待实测）',
       tags: ["学院","材料"], color: 'blue'
     },
     {
-      id: 'p39', campus: 'changan', name: '机电学院', type: '学院', icon: '⚙️',
+      id: 'p39', campus: 'changan', name: '机电学院', type: '学院', icon: '🏛️',
       latitude: 34.03282, longitude: 108.76772,
       address: '教学区东侧', description: '机电学院（坐标估算，待实测）',
       tags: ["学院","机电"], color: 'blue'
     },
     {
-      id: 'p40', campus: 'changan', name: '力学与土木建筑学院', type: '学院', icon: '🏗️',
+      id: 'p40', campus: 'changan', name: '力学与土木建筑学院', type: '学院', icon: '🏛️',
       latitude: 34.03252, longitude: 108.76832,
       address: '教学区东侧', description: '力学与土木建筑学院（坐标估算，待实测）',
       tags: ["学院","力学","土木"], color: 'blue'
     },
     {
-      id: 'p41', campus: 'changan', name: '理学院', type: '学院', icon: '🔬',
+      id: 'p41', campus: 'changan', name: '理学院', type: '学院', icon: '🏛️',
       latitude: 34.03242, longitude: 108.76312,
       address: '教学区西侧', description: '理学院（数学、物理、化学等）（坐标估算，待实测）',
       tags: ["学院","理科"], color: 'blue'
     },
     {
-      id: 'p42', campus: 'changan', name: '外国语学院', type: '学院', icon: '🌐',
+      id: 'p42', campus: 'changan', name: '外国语学院', type: '学院', icon: '🏛️',
       latitude: 34.03202, longitude: 108.76242,
       address: '教学区西侧', description: '外国语学院（坐标估算，待实测）',
       tags: ["学院","外语"], color: 'blue'
     },
     {
-      id: 'p43', campus: 'changan', name: '人文与经法学院', type: '学院', icon: '⚖️',
+      id: 'p43', campus: 'changan', name: '人文与经法学院', type: '学院', icon: '🏛️',
       latitude: 34.03172, longitude: 108.76182,
       address: '教学区西侧', description: '人文与经法学院（坐标估算，待实测）',
       tags: ["学院","人文","法学"], color: 'blue'
     },
     {
-      id: 'p44', campus: 'changan', name: '微电子学院', type: '学院', icon: '🔌',
+      id: 'p44', campus: 'changan', name: '微电子学院', type: '学院', icon: '🏛️',
       latitude: 34.03442, longitude: 108.76682,
       address: '教学区东侧', description: '微电子学院（坐标估算，待实测）',
       tags: ["学院","微电子"], color: 'blue'
     },
     {
-      id: 'p45', campus: 'changan', name: '启真湖', type: '风景', icon: '🌊',
+      id: 'p45', campus: 'changan', name: '启真湖', type: '风景', icon: '🏊',
       latitude: 34.03042, longitude: 108.76532,
       address: '图书馆周围', description: '图书馆建在湖上，湖边步道适合散步晨读（坐标估算，待实测）',
       tags: ["风景","散步","湖"], color: 'green'
     },
     {
-      id: 'p46', campus: 'changan', name: '快递服务中心', type: '生活', icon: '📦',
+      id: 'p46', campus: 'changan', name: '快递服务中心', type: '生活', icon: '🛒',
       latitude: 34.03502, longitude: 108.76362,
       address: '星天苑生活区', description: '快递代收点，取件常来这里（坐标估算，待实测）',
       tags: ["快递","取件","生活"], color: 'orange'
     },
     {
-      id: 'p47', campus: 'changan', name: '行政楼', type: '服务', icon: '🏢',
+      id: 'p47', campus: 'changan', name: '行政楼', type: '服务', icon: '🏛️',
       latitude: 34.03282, longitude: 108.76522,
       address: '校区中部', description: '行政办公，办理各种手续常来（坐标估算，待实测）',
       tags: ["行政","办公","服务"], color: 'blue'

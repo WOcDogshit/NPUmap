@@ -9,7 +9,9 @@ App({
     this.globalData.unlockedGolden = wx.getStorageSync('unlockedGolden') === true
     this.globalData.visits = wx.getStorageSync('visits') || {}
     this.globalData.visited = wx.getStorageSync('visited') || []
-    this.globalData.hiddenPoiTypes = wx.getStorageSync('hiddenPoiTypes') || []
+    // 首次使用默认隐藏：校门、公交站、校车站（用户可随时在「图标管理」里打开）
+    const savedHidden = wx.getStorageSync('hiddenPoiTypes')
+    this.globalData.hiddenPoiTypes = Array.isArray(savedHidden) ? savedHidden : ['校门', '公交站', '校车站']
   },
 
   globalData: {

@@ -526,3 +526,8 @@
   left: 42rpx;
 }
 
+
+.type-row-hover {
+  background: var(--soft);
+}
+

@@ -393,3 +393,31 @@
   font-size: 24rpx;
   color: var(--text-muted);
 }
+
+/* ===== 步行 / 骑行切换 ===== */
+.mode-switch {
+  display: flex;
+  background: var(--soft);
+  border-radius: 20rpx;
+  padding: 6rpx;
+  margin-bottom: 20rpx;
+}
+
+.mode-tab {
+  flex: 1;
+  height: 64rpx;
+  border-radius: 16rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 27rpx;
+  font-weight: 600;
+  color: var(--text-sub);
+  transition: all 0.25s ease;
+}
+
+.mode-tab.active {
+  background: var(--glass-strong);
+  color: var(--c-primary);
+  box-shadow: 0 4rpx 12rpx rgba(27, 36, 48, 0.08);
+}

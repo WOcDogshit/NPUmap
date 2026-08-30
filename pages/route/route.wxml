@@ -27,6 +27,12 @@
       </view>
     </view>
 
+    <!-- 步行 / 骑行切换 -->
+    <view class="mode-switch">
+      <view class="mode-tab {{routeMode === 'walking' ? 'active' : ''}}" data-mode="walking" bindtap="switchMode">🚶 步行</view>
+      <view class="mode-tab {{routeMode === 'bicycling' ? 'active' : ''}}" data-mode="bicycling" bindtap="switchMode">🚴 骑行</view>
+    </view>
+
     <view class="route-head">
       <view class="point-row" bindtap="showStartPicker">
         <view class="dot dot-green"></view>
@@ -65,7 +71,7 @@
   </view>
   <view class="panel nav-panel" wx:else>
     <view class="nav-head">
-      <view class="nav-title">🚶 步行导航中</view>
+      <view class="nav-title">{{routeMode === 'bicycling' ? '🚴 骑行导航中' : '🚶 步行导航中'}}</view>
       <view class="nav-exit" bindtap="stopNav">退出导航</view>
     </view>
     <view class="nav-instruction">{{navInstruction}}</view>
@@ -74,7 +80,7 @@
       <text class="nav-sep">·</text>
       <text class="nav-time">{{navRemainMin}}</text>
     </view>
-    <view class="nav-hint">地图会跟着你移动，到路口前会提醒你</view>
+    <view class="nav-hint">{{routeMode === 'bicycling' ? '骑行请留意路况，到路口前会提醒你' : '地图会跟着你移动，到路口前会提醒你'}}</view>
   </view>
 
   <!-- 起点选择弹层 -->

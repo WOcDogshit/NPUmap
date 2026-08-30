@@ -1,5 +1,5 @@
 const poisData = require('../../data/pois.js')
-const { walkingRoute } = require('../../utils/route.js')
+const { routePlan } = require('../../utils/route.js')
 const app = getApp()
 
 const THEME_LINE = {
@@ -73,7 +73,9 @@ Page({
     navTitle: '校内路线',
     dark: false,
     routeFaved: false,
-    // 实时步行导航
+    // 路线模式：walking 步行 / bicycling 骑行
+    routeMode: 'walking',
+    // 实时导航
     navMode: false,
     navInstruction: '',
     navRemainDist: '',
@@ -150,9 +152,10 @@ Page({
     }
     this.setData({ loading: true, errorMsg: '', steps: [], polyline: [] })
 
-    walkingRoute(
+    routePlan(
       { latitude: from.latitude, longitude: from.longitude },
-      { latitude: to.latitude, longitude: to.longitude }
+      { latitude: to.latitude, longitude: to.longitude },
+      this.data.routeMode
     ).then((r) => {
       // 保存步骤数据，供实时导航使用
       this._steps = r.steps
@@ -272,6 +275,16 @@ Page({
     }
   },
 
+  // 切换步行 / 骑行，重新规划路线
+  switchMode(e) {
+    const mode = e.currentTarget.dataset.mode
+    if (mode === this.data.routeMode) return
+    this.setData({ routeMode: mode, navMode: false })
+    if (wx.offLocationChange) wx.offLocationChange()
+    if (wx.stopLocationUpdate) wx.stopLocationUpdate({ fail: () => {} })
+    this.loadRoute()
+  },
+
   // ===== 实时步行导航 =====
   startNav() {
     const steps = this._steps || []
@@ -329,13 +342,18 @@ Page({
       scale: 17,
       navInstruction: r.instruction,
       navRemainDist: '剩余 ' + remainText,
-      navRemainMin: '约 ' + Math.max(1, Math.round(r.remain / 70)) + ' 分钟'
+      navRemainMin: '约 ' + Math.max(1, Math.round(r.remain / this.speedPerMin())) + ' 分钟'
     })
     // 进入新的一段路时振动提醒
     if (r.idx !== this._navStepIdx) {
       this._navStepIdx = r.idx
       if (wx.vibrateShort) wx.vibrateShort({ type: 'medium', fail: () => {} })
     }
+  },
+
+  // 步行约 70 米/分，骑行约 250 米/分
+  speedPerMin() {
+    return this.data.routeMode === 'bicycling' ? 250 : 70
   },
 
   // 计算当前位置对应的路线步骤与剩余距离

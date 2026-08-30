@@ -1,5 +1,5 @@
 // ============================================
-// 校内路线规划（腾讯位置服务 · 步行路线 API）
+// 校内路线规划（腾讯位置服务 · 步行/骑行路线 API）
 //
 // 已配置：
 // - KEY：WebServiceAPI key（控制台 → 应用管理 → 我的应用 → key 列表）
@@ -17,7 +17,12 @@ const config = require('../config.js')
 // key / 签名密钥统一从 config.js 读取（该文件不参与版本控制，避免敏感信息泄露）
 const KEY = config.TENCENT_MAP_KEY
 const SK = config.TENCENT_MAP_SK
-const PATH = '/ws/direction/v1/walking'
+
+// 路线 API 路径：步行 / 骑行
+const ROUTE_PATHS = {
+  walking: '/ws/direction/v1/walking',
+  bicycling: '/ws/direction/v1/bicycling'
+}
 
 // 解码腾讯增量压缩折线：第一个点绝对坐标(纬度,经度)，之后每两个数是一个点的增量，单位 1e-6 度
 function decodePolyline(flat) {
@@ -38,36 +43,38 @@ function decodePolyline(flat) {
 // 签名计算（腾讯官方规则，已实测验证）：
 // sig = md5( 请求路径 + '?' + 排序后的原始参数 + SK )
 // 注意：参数必须用【未编码】的原始值，按参数名升序排序，SK 直接拼在末尾
-function buildSig(params) {
+function buildSig(params, path) {
   var keys = Object.keys(params).sort()
   var qs = ''
   keys.forEach(function (k) {
     qs += k + '=' + params[k] + '&'
   })
   qs = qs.slice(0, -1)
-  return md5(PATH + '?' + qs + SK)
+  return md5(path + '?' + qs + SK)
 }
 
 /**
- * 获取步行路线
+ * 获取步行 / 骑行路线
  * @param {{latitude:number, longitude:number}} from 起点
  * @param {{latitude:number, longitude:number}} to 终点
+ * @param {string} [mode='walking'] 模式：walking（步行）| bicycling（骑行）
  * @returns {Promise<{polyline:Array, steps:Array, distance:number, duration:number}>}
  */
-function walkingRoute(from, to) {
+function routePlan(from, to, mode) {
   return new Promise((resolve, reject) => {
     if (KEY.indexOf('PASTE') === 0) {
       reject(new Error('NO_KEY'))
       return
     }
+    var path = ROUTE_PATHS[mode] || ROUTE_PATHS.walking
     var params = {
       from: from.latitude + ',' + from.longitude,
       to: to.latitude + ',' + to.longitude,
       key: KEY
     }
-    var sig = buildSig(params)
+    var sig = buildSig(params, path)
     wx.request({
-      url: 'https://apis.map.qq.com' + PATH,
+      url: 'https://apis.map.qq.com' + path,
       data: {
         from: params.from,
         to: params.to,
@@ -115,4 +122,9 @@ function walkingRoute(from, to) {
   })
 }
 
-module.exports = { walkingRoute }
+// 兼容旧接口：walkingRoute = 步行路线
+function walkingRoute(from, to) {
+  return routePlan(from, to, 'walking')
+}
+
+module.exports = { routePlan, walkingRoute }

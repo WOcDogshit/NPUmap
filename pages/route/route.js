@@ -304,10 +304,23 @@ Page({
       return
     }
     this._navStepIdx = -1
+    // 开启罗盘，获取手机朝向（用于「前进朝上」跟随旋转）
+    if (wx.startCompass) wx.startCompass({ fail: () => {} })
+    if (wx.onCompassChange) {
+      wx.onCompassChange((res) => {
+        if (this.data.navMode && this.data.navHeadingMode === 'heading' && typeof res.direction === 'number') {
+          const rotate = res.direction % 360
+          this._currentRotate = rotate
+          this.setData({ rotate })
+        }
+      })
+    }
     this.setData({
       navMode: true,
-      scale: 17,
+      scale: 18,
       rotate: 0,
+      // 清掉自动缩放适配，让用户手动缩放的级别保持住
+      includePoints: [],
       navInstruction: steps[0].instruction || '',
       navRemainDist: '剩余 ' + (this.data.distanceKm || ''),
       navRemainMin: '约 ' + (this.data.durationMin || '') + ' 分钟'
@@ -337,6 +350,8 @@ Page({
   stopNav() {
     if (wx.stopLocationUpdate) wx.stopLocationUpdate({ fail: () => {} })
     if (wx.offLocationChange) wx.offLocationChange()
+    if (wx.stopCompass) wx.stopCompass({ fail: () => {} })
+    if (wx.offCompassChange) wx.offCompassChange()
     this.setData({ navMode: false, scale: 15, rotate: 0 })
   },
 
@@ -344,11 +359,7 @@ Page({
   switchHeadingMode(e) {
     const mode = e.currentTarget.dataset.mode
     if (mode === this.data.navHeadingMode) return
-    this.setData({ navHeadingMode: mode, rotate: 0 })
-    // 重新用当前位置的朝向立即刷新
-    if (mode === 'heading' && this._lastNavLoc && typeof this._lastNavLoc.heading === 'number') {
-      this.setData({ rotate: (360 - this._lastNavLoc.heading) % 360 })
-    }
+    this.setData({ navHeadingMode: mode, rotate: mode === 'north' ? 0 : (this._currentRotate || 0) })
   },
 
   // 收起 / 展开顶部导航信息卡（收起后地图可视区域更大）
@@ -364,16 +375,9 @@ Page({
     const remainText = r.remain >= 1000
       ? (r.remain / 1000).toFixed(1) + ' 公里'
       : Math.max(1, Math.round(r.remain)) + ' 米'
-    // 地图朝向：跟随前进方向（地图旋转）或固定北向上
-    let rotate = 0
-    if (this.data.navHeadingMode === 'heading' && typeof res.heading === 'number') {
-      rotate = (360 - res.heading) % 360
-    }
-    this._lastNavLoc = res
+    // 只跟随位置，不重置缩放级别（用户手动放大后保持），地图朝向由罗盘控制
     this.setData({
       center: cur,
-      scale: 17,
-      rotate,
       navInstruction: r.instruction,
       navRemainDist: '剩余 ' + remainText,
       navRemainMin: '约 ' + Math.max(1, Math.round(r.remain / this.speedPerMin())) + ' 分钟'

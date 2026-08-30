@@ -536,3 +536,23 @@
   box-shadow: 0 10rpx 24rpx rgba(240, 65, 55, 0.35);
 }
 
+
+/* 顶部指引卡：真正的毛玻璃（半透明 + 模糊） */
+.nav-top-card {
+  background: var(--glass);
+  backdrop-filter: blur(28rpx);
+  -webkit-backdrop-filter: blur(28rpx);
+}
+
+/* 朝向开关：小巧 */
+.nav-heading {
+  gap: 10rpx;
+  margin-top: 14rpx;
+}
+
+.heading-tab {
+  height: 50rpx;
+  border-radius: 25rpx;
+  font-size: 22rpx;
+}
+

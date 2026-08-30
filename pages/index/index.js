@@ -290,39 +290,9 @@ Page({
     wx.navigateTo({ url: '/pages/more/more' })
   },
 
-  // ===== 图标分类管理 =====
+  // ===== 图标分类管理（独立页面） =====
   openPoiTypes() {
-    this.buildPoiTypes(this.data.pois)
-    this.setData({ poiTypeManagerOpen: true })
-  },
-
-  closePoiTypes() {
-    this.setData({ poiTypeManagerOpen: false })
-  },
-
-  // 从地点数据汇总分类（图标用该分类第一个地点的 emoji）
-  buildPoiTypes(pois) {
-    const map = {}
-    ;(pois || []).forEach(p => {
-      const t = p.type || '其他'
-      if (!map[t]) map[t] = { type: t, icon: p.icon || '📍', count: 0 }
-      map[t].count++
-    })
-    this.setData({ poiTypes: Object.values(map) })
-  },
-
-  // 开关某个分类的图标显示（自定义胶囊开关，点击切换）
-  togglePoiType(e) {
-    const type = e.currentTarget.dataset.type
-    const hidden = this.data.hiddenTypes.slice()
-    const i = hidden.indexOf(type)
-    if (i > -1) hidden.splice(i, 1)
-    else hidden.push(type)
-    this.setData({ hiddenTypes: hidden })
-    app.setPoiTypesHidden(hidden)
-    // 用当前列表（有结果时）或全部地点刷新地图，避免空列表把地图图标清空
-    const base = (this.data.filtered && this.data.filtered.length) ? this.data.filtered : this.data.pois
-    this.buildMarkers(base)
+    wx.navigateTo({ url: '/pages/typemanage/typemanage' })
   },
 
   // 地图缩放变化：放大到 16 级才显示名称标签，缩小则只显示图标

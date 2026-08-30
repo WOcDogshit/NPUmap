@@ -1,0 +1,18 @@
+
+<view class="page theme-{{theme}} {{dark ? 'dark' : '}}">
+  <nav-bar title="图标管理" showBack theme="{{theme}}" dark="{{dark}}" plain />
+
+  <view class="hint">选择在地图上显示的图标分类，关掉哪类，地图上就隐藏哪类图标</view>
+
+  <view class="card">
+    <view class="type-row" wx:for="{{types}}" wx:key="type">
+      <view class="type-emoji">{{item.icon}}</view>
+      <view class="type-info">
+        <view class="type-name">{{item.type}}</view>
+        <view class="type-count">{{item.count}} 个地点</view>
+      </view>
+      <switch checked="{{hiddenTypes.indexOf(item.type) === -1}}" color="#1464e0" data-type="{{item.type}}" bindchange="toggleType" />
+    </view>
+  </view>
+</view>
+

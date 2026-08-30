@@ -100,8 +100,6 @@
     </scroll-view>
   </view>
 
-  <!-- 图标分类管理弹层 -->
-  <view class="types-mask" wx:if="{{poiTypeManagerOpen}}" bindtap="closePoiTypes"></view>
   <view class="types-panel" wx:if="{{poiTypeManagerOpen}}">
     <view class="types-head">
       <text class="types-title">🗂️ 图标管理</text>

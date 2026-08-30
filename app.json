@@ -12,7 +12,8 @@
     "pages/changelog/changelog",
     "pages/badges/badges",
     "pages/album/album",
-    "pages/favroutes/favroutes"
+    "pages/favroutes/favroutes",
+    "pages/typemanage/typemanage"
   ],
   "window": {
     "navigationBarBackgroundColor": "#1464E0",

@@ -12,6 +12,46 @@ const THEME_LINE = {
   golden: '#7c3aed'
 }
 
+// ===== 步行导航几何计算 =====
+// 两点距离（米）
+function navDist(a, b) {
+  var R = 6371000
+  var rad = function (d) { return d * Math.PI / 180 }
+  var dLat = rad(b.latitude - a.latitude)
+  var dLng = rad(b.longitude - a.longitude)
+  var s = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(rad(a.latitude)) * Math.cos(rad(b.latitude)) *
+    Math.sin(dLng / 2) * Math.sin(dLng / 2)
+  return 2 * R * Math.asin(Math.sqrt(s))
+}
+
+// 点到线段的最近距离与垂足（等距圆柱近似，校园范围足够精确）
+function navPointSeg(p, a, b) {
+  var R = 6371000
+  var rad = function (d) { return d * Math.PI / 180 }
+  var px = rad(p.longitude) * R * Math.cos(rad(p.latitude))
+  var py = rad(p.latitude) * R
+  var ax = rad(a.longitude) * R * Math.cos(rad(a.latitude))
+  var ay = rad(a.latitude) * R
+  var bx = rad(b.longitude) * R * Math.cos(rad(b.latitude))
+  var by = rad(b.latitude) * R
+  var abx = bx - ax
+  var aby = by - ay
+  var apx = px - ax
+  var apy = py - ay
+  var ab2 = abx * abx + aby * aby
+  var t = ab2 === 0 ? 0 : (apx * abx + apy * aby) / ab2
+  t = Math.max(0, Math.min(1, t))
+  var cx = ax + t * abx
+  var cy = ay + t * aby
+  var dist = Math.sqrt((px - cx) * (px - cx) + (py - cy) * (py - cy))
+  var proj = {
+    latitude: a.latitude + t * (b.latitude - a.latitude),
+    longitude: a.longitude + t * (b.longitude - a.longitude)
+  }
+  return { t: t, dist: dist, proj: proj }
+}
+
 Page({
   data: {
     to: null,
@@ -33,6 +73,11 @@ Page({
     navTitle: '校内路线',
     dark: false,
     routeFaved: false,
+    // 实时步行导航
+    navMode: false,
+    navInstruction: '',
+    navRemainDist: '',
+    navRemainMin: '',
     // 深色地图（地图个性化样式）：微信小程序的官方高级能力，当前未开通，地图底图保持浅色。
     // 如以后在微信公众平台「地图个性化样式」中配置好样式，
     // 把样式绑定的 key 填到 mapSubkey，并把 mapLayerStyle 设为 1（1 = 微信深色样式）。
@@ -109,6 +154,8 @@ Page({
       { latitude: from.latitude, longitude: from.longitude },
       { latitude: to.latitude, longitude: to.longitude }
     ).then((r) => {
+      // 保存步骤数据，供实时导航使用
+      this._steps = r.steps
       const markers = [
         {
           id: 1,
@@ -225,7 +272,126 @@ Page({
     }
   },
 
+  // ===== 实时步行导航 =====
+  startNav() {
+    const steps = this._steps || []
+    const to = this.data.to
+    if (!steps.length || !to) {
+      wx.showToast({ title: '暂无路线可导航', icon: 'none' })
+      return
+    }
+    this._navStepIdx = -1
+    this.setData({
+      navMode: true,
+      scale: 17,
+      navInstruction: steps[0].instruction || '',
+      navRemainDist: '剩余 ' + (this.data.distanceKm || ''),
+      navRemainMin: '约 ' + (this.data.durationMin || '') + ' 分钟'
+    })
+    wx.startLocationUpdate({
+      success: () => {
+        wx.onLocationChange((res) => this.onNavLocation(res))
+        wx.getLocation({
+          type: 'gcj02',
+          success: (res) => this.onNavLocation(res),
+          fail: () => {}
+        })
+      },
+      fail: () => {
+        wx.getLocation({
+          type: 'gcj02',
+          success: (res) => this.onNavLocation(res),
+          fail: () => {
+            wx.showToast({ title: '无法获取定位，导航不可用', icon: 'none' })
+            this.setData({ navMode: false })
+          }
+        })
+      }
+    })
+  },
+
+  stopNav() {
+    if (wx.stopLocationUpdate) wx.stopLocationUpdate({ fail: () => {} })
+    if (wx.offLocationChange) wx.offLocationChange()
+    this.setData({ navMode: false, scale: 15 })
+  },
+
+  // 定位变化：地图跟随 + 判断当前走到哪一步 + 更新剩余距离
+  onNavLocation(res) {
+    const cur = { latitude: res.latitude, longitude: res.longitude }
+    const r = this.calcNav(cur)
+    if (!r) return
+    const remainText = r.remain >= 1000
+      ? (r.remain / 1000).toFixed(1) + ' 公里'
+      : Math.max(1, Math.round(r.remain)) + ' 米'
+    this.setData({
+      center: cur,
+      scale: 17,
+      navInstruction: r.instruction,
+      navRemainDist: '剩余 ' + remainText,
+      navRemainMin: '约 ' + Math.max(1, Math.round(r.remain / 70)) + ' 分钟'
+    })
+    // 进入新的一段路时振动提醒
+    if (r.idx !== this._navStepIdx) {
+      this._navStepIdx = r.idx
+      if (wx.vibrateShort) wx.vibrateShort({ type: 'medium', fail: () => {} })
+    }
+  },
+
+  // 计算当前位置对应的路线步骤与剩余距离
+  calcNav(cur) {
+    const steps = this._steps || []
+    const to = this.data.to
+    if (!steps.length) return null
+    let bestIdx = -1
+    let bestDist = Infinity
+    let bestProj = null
+    let bestSeg = -1
+    steps.forEach((s, si) => {
+      const pts = s.points
+      if (!pts || pts.length < 2) return
+      for (let i = 0; i < pts.length - 1; i++) {
+        const r = navPointSeg(cur, pts[i], pts[i + 1])
+        if (r.dist < bestDist) {
+          bestDist = r.dist
+          bestIdx = si
+          bestProj = r.proj
+          bestSeg = i
+        }
+      }
+    })
+    if (bestIdx === -1) {
+      // 兜底：没有分步路径点时，用直线距离估算
+      return {
+        idx: 0,
+        remain: to ? navDist(cur, to) : 0,
+        instruction: steps[0] ? steps[0].instruction : ''
+      }
+    }
+    // 剩余距离 = 当前段剩余 + 后续各段距离
+    let remain = 0
+    const pts = steps[bestIdx].points
+    if (pts && bestSeg + 1 < pts.length) {
+      remain += navDist(bestProj, pts[bestSeg + 1])
+      for (let i = bestSeg + 1; i < pts.length - 1; i++) {
+        remain += navDist(pts[i], pts[i + 1])
+      }
+    }
+    for (let j = bestIdx + 1; j < steps.length; j++) {
+      remain += steps[j].distance || 0
+    }
+    return {
+      idx: bestIdx,
+      remain: remain,
+      instruction: steps[bestIdx].instruction || ''
+    }
+  },
+
   back() {
     wx.navigateBack()
+  },
+
+  onUnload() {
+    this.stopNav()
   }
 })

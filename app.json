@@ -27,7 +27,9 @@
     }
   },
   "requiredPrivateInfos": [
-    "getLocation"
+    "getLocation",
+    "startLocationUpdate",
+    "onLocationChange"
   ],
   "style": "v2",
   "sitemapLocation": "sitemap.json"

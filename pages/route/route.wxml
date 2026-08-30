@@ -17,8 +17,8 @@
     layer-style="{{mapLayerStyle}}"
   ></map>
 
-  <!-- 底部信息面板 -->
-  <view class="panel">
+  <!-- 底部信息面板（普通模式） -->
+  <view class="panel" wx:if="{{!navMode}}">
     <view class="panel-head">
       <text class="panel-title">步行路线</text>
       <view wx:if="{{!loading && !errorMsg}}" class="chips">
@@ -55,11 +55,26 @@
       </view>
     </scroll-view>
 
+    <view class="nav-start" wx:if="{{steps.length}}" bindtap="startNav">🚶 开始导航</view>
+
     <view class="actions">
       <view class="btn btn-fav {{routeFaved ? 'on' : ''}}" bindtap="toggleFavRoute">{{routeFaved ? '已收藏 ⭐' : '收藏 ⭐'}}</view>
       <view class="btn btn-change" bindtap="showStartPicker">换起点</view>
       <view class="btn btn-back" bindtap="back">返回</view>
     </view>
+  </view>
+  <view class="panel nav-panel" wx:else>
+    <view class="nav-head">
+      <view class="nav-title">🚶 步行导航中</view>
+      <view class="nav-exit" bindtap="stopNav">退出导航</view>
+    </view>
+    <view class="nav-instruction">{{navInstruction}}</view>
+    <view class="nav-meta">
+      <text class="nav-remain">{{navRemainDist}}</text>
+      <text class="nav-sep">·</text>
+      <text class="nav-time">{{navRemainMin}}</text>
+    </view>
+    <view class="nav-hint">地图会跟着你移动，到路口前会提醒你</view>
   </view>
 
   <!-- 起点选择弹层 -->

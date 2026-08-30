@@ -19,6 +19,22 @@ const KEY = config.TENCENT_MAP_KEY
 const SK = config.TENCENT_MAP_SK
 const PATH = '/ws/direction/v1/walking'
 
+// 解码腾讯增量压缩折线：第一个点绝对坐标(纬度,经度)，之后每两个数是一个点的增量，单位 1e-6 度
+function decodePolyline(flat) {
+  var polyline = []
+  if (flat && flat.length >= 2) {
+    var lat = flat[0]
+    var lng = flat[1]
+    polyline.push({ latitude: lat, longitude: lng })
+    for (var i = 2; i + 1 < flat.length; i += 2) {
+      lat += flat[i] * 0.000001
+      lng += flat[i + 1] * 0.000001
+      polyline.push({ latitude: lat, longitude: lng })
+    }
+  }
+  return polyline
+}
+
 // 签名计算（腾讯官方规则，已实测验证）：
 // sig = md5( 请求路径 + '?' + 排序后的原始参数 + SK )
 // 注意：参数必须用【未编码】的原始值，按参数名升序排序，SK 直接拼在末尾
@@ -73,27 +89,16 @@ function walkingRoute(from, to) {
           return
         }
         var route = d.result.routes[0]
-        // polyline 是增量压缩格式：
-        // 第一个点是绝对坐标(纬度,经度)，之后每两个数是一个点的增量，单位 1e-6 度
-        var flat = route.polyline || []
-        var polyline = []
-        if (flat.length >= 2) {
-          var lat = flat[0]
-          var lng = flat[1]
-          polyline.push({ latitude: lat, longitude: lng })
-          for (var i = 2; i + 1 < flat.length; i += 2) {
-            lat += flat[i] * 0.000001
-            lng += flat[i + 1] * 0.000001
-            polyline.push({ latitude: lat, longitude: lng })
-          }
-        }
+        var polyline = decodePolyline(route.polyline || [])
         var steps = (route.steps || []).map(function (s, idx) {
           return {
             idx: idx,
             instruction: s.instruction || '',
             road: s.road || '',
             distance: s.distance || 0,
-            duration: s.duration || 0
+            duration: s.duration || 0,
+            // 每段路的详细路径点（导航时用来判断当前位置走到哪一步）
+            points: decodePolyline(s.polyline || [])
           }
         })
         resolve({

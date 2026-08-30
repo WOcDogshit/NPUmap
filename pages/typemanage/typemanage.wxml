@@ -11,7 +11,7 @@
         <view class="type-name">{{item.type}}</view>
         <view class="type-count">{{item.count}} 个地点</view>
       </view>
-      <switch checked="{{hiddenTypes.indexOf(item.type) === -1}}" color="#1464e0" data-type="{{item.type}}" bindchange="toggleType" />
+      <switch checked="{{item.visible}}" color="#1464e0" data-type="{{item.type}}" bindchange="toggleType" />
     </view>
   </view>
 </view>

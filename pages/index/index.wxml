@@ -100,21 +100,5 @@
     </scroll-view>
   </view>
 
-  <view class="types-panel" wx:if="{{poiTypeManagerOpen}}">
-    <view class="types-head">
-      <text class="types-title">🗂️ 图标管理</text>
-      <text class="types-close" bindtap="closePoiTypes">✕</text>
-    </view>
-    <view class="types-hint">选择在地图上显示的图标分类</view>
-    <scroll-view scroll-y class="types-list">
-      <view class="type-row" wx:for="{{poiTypes}}" wx:key="type">
-        <view class="type-emoji">{{item.icon}}</view>
-        <text class="type-name">{{item.type}}</text>
-        <text class="type-count">{{item.count}} 个</text>
-        <view class="type-switch" style="background: {{hiddenTypes.indexOf(item.type) === -1 ? 'var(--c-primary)' : 'var(--soft)'}}" data-type="{{item.type}}" catchtap="togglePoiType">
-          <view class="type-knob" style="left: {{hiddenTypes.indexOf(item.type) === -1 ? '42rpx' : '6rpx'}}"></view>
-        </view>
-      </view>
-    </scroll-view>
-  </view>
+
 </view>

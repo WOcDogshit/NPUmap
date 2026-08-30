@@ -12,6 +12,7 @@
     markers="{{markers}}"
     polyline="{{polyline}}"
     include-points="{{includePoints}}"
+    rotate="{{rotate}}"
     show-location="{{true}}"
     subkey="{{mapSubkey}}"
     layer-style="{{mapLayerStyle}}"
@@ -74,6 +75,10 @@
     <view class="nav-head">
       <view class="nav-title">{{routeMode === 'bicycling' ? '🚴 骑行导航中' : '🚶 步行导航中'}}</view>
       <view class="nav-exit" bindtap="stopNav">退出导航</view>
+    </view>
+    <view class="nav-heading">
+      <view class="heading-tab {{navHeadingMode === 'heading' ? 'active' : ''}}" data-mode="heading" bindtap="switchHeadingMode">🧭 前进朝上</view>
+      <view class="heading-tab {{navHeadingMode === 'north' ? 'active' : ''}}" data-mode="north" bindtap="switchHeadingMode">⬆️ 北向上</view>
     </view>
     <view class="nav-instruction">{{navInstruction}}</view>
     <view class="nav-meta">

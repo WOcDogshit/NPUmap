@@ -454,3 +454,29 @@
   font-size: 22rpx;
 }
 
+
+/* 导航朝向切换 */
+.nav-heading {
+  display: flex;
+  gap: 14rpx;
+  margin-top: 20rpx;
+}
+
+.heading-tab {
+  flex: 1;
+  height: 64rpx;
+  border-radius: 32rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26rpx;
+  font-weight: 600;
+  color: var(--text-sub);
+  background: var(--soft);
+}
+
+.heading-tab.active {
+  color: #ffffff;
+  background: var(--c-primary);
+}
+

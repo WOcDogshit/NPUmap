@@ -80,6 +80,9 @@ Page({
     navInstruction: '',
     navRemainDist: '',
     navRemainMin: '',
+    // 导航地图朝向：heading=前进方向朝上（跟随），north=北向上
+    navHeadingMode: 'heading',
+    rotate: 0,
     // 深色地图（地图个性化样式）：微信小程序的官方高级能力，当前未开通，地图底图保持浅色。
     // 如以后在微信公众平台「地图个性化样式」中配置好样式，
     // 把样式绑定的 key 填到 mapSubkey，并把 mapLayerStyle 设为 1（1 = 微信深色样式）。
@@ -297,6 +300,7 @@ Page({
     this.setData({
       navMode: true,
       scale: 17,
+      rotate: 0,
       navInstruction: steps[0].instruction || '',
       navRemainDist: '剩余 ' + (this.data.distanceKm || ''),
       navRemainMin: '约 ' + (this.data.durationMin || '') + ' 分钟'
@@ -326,7 +330,18 @@ Page({
   stopNav() {
     if (wx.stopLocationUpdate) wx.stopLocationUpdate({ fail: () => {} })
     if (wx.offLocationChange) wx.offLocationChange()
-    this.setData({ navMode: false, scale: 15 })
+    this.setData({ navMode: false, scale: 15, rotate: 0 })
+  },
+
+  // 切换导航地图朝向：前进方向朝上 / 北向上
+  switchHeadingMode(e) {
+    const mode = e.currentTarget.dataset.mode
+    if (mode === this.data.navHeadingMode) return
+    this.setData({ navHeadingMode: mode, rotate: 0 })
+    // 重新用当前位置的朝向立即刷新
+    if (mode === 'heading' && this._lastNavLoc && typeof this._lastNavLoc.heading === 'number') {
+      this.setData({ rotate: (360 - this._lastNavLoc.heading) % 360 })
+    }
   },
 
   // 定位变化：地图跟随 + 判断当前走到哪一步 + 更新剩余距离
@@ -337,9 +352,16 @@ Page({
     const remainText = r.remain >= 1000
       ? (r.remain / 1000).toFixed(1) + ' 公里'
       : Math.max(1, Math.round(r.remain)) + ' 米'
+    // 地图朝向：跟随前进方向（地图旋转）或固定北向上
+    let rotate = 0
+    if (this.data.navHeadingMode === 'heading' && typeof res.heading === 'number') {
+      rotate = (360 - res.heading) % 360
+    }
+    this._lastNavLoc = res
     this.setData({
       center: cur,
       scale: 17,
+      rotate,
       navInstruction: r.instruction,
       navRemainDist: '剩余 ' + remainText,
       navRemainMin: '约 ' + Math.max(1, Math.round(r.remain / this.speedPerMin())) + ' 分钟'

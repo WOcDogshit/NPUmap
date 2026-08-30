@@ -113,8 +113,8 @@
         <view class="type-emoji">{{item.icon}}</view>
         <text class="type-name">{{item.type}}</text>
         <text class="type-count">{{item.count}} 个</text>
-        <view class="type-switch {{hiddenTypes.indexOf(item.type) === -1 ? 'on' : ''}}" data-type="{{item.type}}" catchtap="togglePoiType">
-          <view class="type-knob"></view>
+        <view class="type-switch" style="background: {{hiddenTypes.indexOf(item.type) === -1 ? 'var(--c-primary)' : 'var(--soft)'}}" data-type="{{item.type}}" catchtap="togglePoiType">
+          <view class="type-knob" style="left: {{hiddenTypes.indexOf(item.type) === -1 ? '42rpx' : '6rpx'}}"></view>
         </view>
       </view>
     </scroll-view>

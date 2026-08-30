@@ -392,7 +392,7 @@
   right: 0;
   bottom: 0;
   background: rgba(27, 36, 48, 0.45);
-  z-index: 40;
+  z-index: 998;
 }
 
 
@@ -400,7 +400,7 @@
   position: fixed;
   left: 16rpx;
   right: 16rpx;
-  z-index: 41;
+  z-index: 999;
   background: var(--glass);
   border-radius: 32rpx;
   max-height: 70vh;

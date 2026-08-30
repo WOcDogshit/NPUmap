@@ -323,6 +323,7 @@ Page({
     // 用当前列表（有结果时）或全部地点刷新地图，避免空列表把地图图标清空
     const base = (this.data.filtered && this.data.filtered.length) ? this.data.filtered : this.data.pois
     this.buildMarkers(base)
+    wx.showToast({ title: (i > -1 ? '已显示 ' : '已隐藏 ') + type + ' 图标', icon: 'none', duration: 1200 })
   },
 
   // 地图缩放变化：放大到 16 级才显示名称标签，缩小则只显示图标

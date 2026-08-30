@@ -359,3 +359,137 @@
   font-size: 40rpx;
   margin-left: 12rpx;
 }
+
+/* ===== 顶部工具栏右侧按钮 ===== */
+.tool-right {
+  display: flex;
+  align-items: center;
+  gap: 14rpx;
+}
+
+.types-btn {
+  position: relative;
+  z-index: 20;
+  width: 92rpx;
+  height: 92rpx;
+  border-radius: 50%;
+  background: var(--glass-solid);
+  backdrop-filter: blur(16rpx);
+  -webkit-backdrop-filter: blur(16rpx);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40rpx;
+  box-shadow: 0 8rpx 24rpx rgba(0, 0, 0, 0.14);
+}
+
+
+/* ===== 图标分类管理弹层 ===== */
+.types-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(27, 36, 48, 0.45);
+  z-index: 40;
+}
+
+
+.types-panel {
+  position: fixed;
+  left: 16rpx;
+  right: 16rpx;
+  z-index: 41;
+  background: var(--glass);
+  border-radius: 32rpx;
+  max-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+
+.types-panel {
+  backdrop-filter: blur(24rpx);
+  -webkit-backdrop-filter: blur(24rpx);
+  border: 1rpx solid rgba(255, 255, 255, 0.65);
+  box-shadow: 0 -6rpx 30rpx rgba(27, 36, 48, 0.2);
+}
+
+.types-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28rpx 32rpx 14rpx;
+}
+
+
+.types-title {
+  font-size: 32rpx;
+  font-weight: 700;
+  color: var(--text-strong);
+}
+
+.types-close {
+  color: var(--text-muted);
+  font-size: 32rpx;
+  padding: 0 8rpx;
+}
+
+.types-hint {
+  padding: 0 32rpx 14rpx;
+  font-size: 24rpx;
+  color: var(--text-muted);
+}
+
+
+.types-list {
+  max-height: 56vh;
+}
+
+.type-row {
+  display: flex;
+  align-items: center;
+  padding: 20rpx 32rpx;
+  border-bottom: 1rpx solid var(--divider);
+}
+
+.type-row:last-child {
+  border-bottom: none;
+}
+
+
+.type-emoji {
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: 18rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32rpx;
+  margin-right: 20rpx;
+  flex-shrink: 0;
+  background: var(--soft);
+}
+
+.type-name {
+  flex: 1;
+  font-size: 28rpx;
+  font-weight: 600;
+  color: var(--text-strong);
+}
+
+.type-count {
+  font-size: 22rpx;
+  color: var(--text-muted);
+  margin-right: 16rpx;
+}
+
+
+/* types-panel 底部定位补丁 */
+.types-panel {
+  bottom: calc(16rpx + constant(safe-area-inset-bottom));
+  bottom: calc(16rpx + env(safe-area-inset-bottom));
+}
+

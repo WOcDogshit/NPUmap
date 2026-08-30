@@ -43,7 +43,10 @@
         bindtap="switchCampus"
       >友谊校区</view>
     </view>
-    <view class="locate-btn" bindtap="locate">📍</view>
+    <view class="tool-right">
+      <view class="types-btn" bindtap="openPoiTypes">🗂️</view>
+      <view class="locate-btn" bindtap="locate">📍</view>
+    </view>
   </view>
 
   <!-- 校园地图 -->
@@ -93,6 +96,24 @@
         </view>
         <view class="poi-pin {{item.pinned ? 'on' : ''}}" data-id="{{item.id}}" catchtap="onTogglePin">📌</view>
         <text class="poi-arrow">›</text>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 图标分类管理弹层 -->
+  <view class="types-mask" wx:if="{{poiTypeManagerOpen}}" bindtap="closePoiTypes"></view>
+  <view class="types-panel" wx:if="{{poiTypeManagerOpen}}">
+    <view class="types-head">
+      <text class="types-title">🗂️ 图标管理</text>
+      <text class="types-close" bindtap="closePoiTypes">✕</text>
+    </view>
+    <view class="types-hint">选择在地图上显示的图标分类</view>
+    <scroll-view scroll-y class="types-list">
+      <view class="type-row" wx:for="{{poiTypes}}" wx:key="type">
+        <view class="type-emoji">{{item.icon}}</view>
+        <text class="type-name">{{item.type}}</text>
+        <text class="type-count">{{item.count}} 个</text>
+        <switch checked="{{hiddenTypes.indexOf(item.type) === -1}}" color="#1464e0" data-type="{{item.type}}" bindchange="togglePoiType" />
       </view>
     </scroll-view>
   </view>

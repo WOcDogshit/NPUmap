@@ -84,7 +84,11 @@ Page({
     // 如以后在微信公众平台「地图个性化样式」中配置好样式，
     // 把样式绑定的 key 填到 mapSubkey，并把 mapLayerStyle 设为 1（1 = 微信深色样式）。
     mapSubkey: '',
-    mapLayerStyle: 0
+    mapLayerStyle: 0,
+    // 图标分类管理
+    poiTypeManagerOpen: false,
+    poiTypes: [],
+    hiddenTypes: []
   },
 
   onLoad() {
@@ -99,8 +103,10 @@ Page({
     const campus = campuses.find(c => c.id === currentCampus)
     const pois = poisData.pois.filter(p => p.campus === currentCampus)
     const decorated = this.applyPinOrder(this.decorate(pois))
+    const hiddenTypes = app.globalData.hiddenPoiTypes || []
     this.currentScale = 15
-    this.setData({ campus, greet, campuses, currentCampus, pois, filtered: decorated, center: campus.center, theme, showLabels, showBusStops, dark })
+    this.setData({ campus, greet, campuses, currentCampus, pois, filtered: decorated, center: campus.center, theme, showLabels, showBusStops, dark, hiddenTypes })
+    this.buildPoiTypes(decorated)
     app.setThemeNav(theme)
     this.buildMarkers(decorated)
   },
@@ -145,10 +151,11 @@ Page({
     const showLabels = app.globalData.showLabels
     const showBusStops = app.globalData.showBusStops
     const dark = app.globalData.darkMode
+    const hiddenTypes = app.globalData.hiddenPoiTypes || []
     app.setThemeNav(theme)
-    const changed = theme !== this.data.theme || showLabels !== this.data.showLabels || showBusStops !== this.data.showBusStops || dark !== this.data.dark
+    const changed = theme !== this.data.theme || showLabels !== this.data.showLabels || showBusStops !== this.data.showBusStops || dark !== this.data.dark || hiddenTypes.join(',') !== (this.data.hiddenTypes || []).join(',')
     // 每次都同步主题，确保顶部导航栏渐变一定更新
-    this.setData({ theme, showLabels, showBusStops, dark })
+    this.setData({ theme, showLabels, showBusStops, dark, hiddenTypes })
     // 回到首页时按访问频率刷新列表顺序（搜索中不打扰）
     if (!this.data.keyword && this.data.pois && this.data.pois.length) {
       this.setData({ filtered: this.applyPinOrder(this.decorate(this.data.pois)) })
@@ -205,8 +212,13 @@ Page({
     const zoom = this.currentScale || this.data.scale
     const showLabels = this.data.showLabels && zoom >= 16
     const showBusStops = this.data.showBusStops
-    // 关闭公交站开关时，过滤掉公交站/校车站
-    const visible = showBusStops ? pois : pois.filter(p => p.type !== '公交站' && p.type !== '校车站')
+    // 图标管理：先过滤掉被隐藏的分类
+    const hidden = this.data.hiddenTypes || []
+    let visible = pois.filter(p => hidden.indexOf(p.type) === -1)
+    // 关闭公交站开关时，再过滤掉公交站/校车站
+    if (!showBusStops) {
+      visible = visible.filter(p => p.type !== '公交站' && p.type !== '校车站')
+    }
     const markers = visible.map((p, index) => {
       const m = {
         id: index + 1,
@@ -276,6 +288,40 @@ Page({
   // 去"更多"设置页
   goMore() {
     wx.navigateTo({ url: '/pages/more/more' })
+  },
+
+  // ===== 图标分类管理 =====
+  openPoiTypes() {
+    this.buildPoiTypes(this.data.pois)
+    this.setData({ poiTypeManagerOpen: true })
+  },
+
+  closePoiTypes() {
+    this.setData({ poiTypeManagerOpen: false })
+  },
+
+  // 从地点数据汇总分类（图标用该分类第一个地点的 emoji）
+  buildPoiTypes(pois) {
+    const map = {}
+    ;(pois || []).forEach(p => {
+      const t = p.type || '其他'
+      if (!map[t]) map[t] = { type: t, icon: p.icon || '📍', count: 0 }
+      map[t].count++
+    })
+    this.setData({ poiTypes: Object.values(map) })
+  },
+
+  // 开关某个分类的图标显示
+  togglePoiType(e) {
+    const type = e.currentTarget.dataset.type
+    const show = e.detail.value
+    const hidden = this.data.hiddenTypes.slice()
+    const i = hidden.indexOf(type)
+    if (show && i > -1) hidden.splice(i, 1)
+    if (!show && i === -1) hidden.push(type)
+    this.setData({ hiddenTypes: hidden })
+    app.setPoiTypesHidden(hidden)
+    this.buildMarkers(this.data.filtered || this.data.pois)
   },
 
   // 地图缩放变化：放大到 16 级才显示名称标签，缩小则只显示图标

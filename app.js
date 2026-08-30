@@ -9,6 +9,7 @@ App({
     this.globalData.unlockedGolden = wx.getStorageSync('unlockedGolden') === true
     this.globalData.visits = wx.getStorageSync('visits') || {}
     this.globalData.visited = wx.getStorageSync('visited') || []
+    this.globalData.hiddenPoiTypes = wx.getStorageSync('hiddenPoiTypes') || []
   },
 
   globalData: {
@@ -20,7 +21,8 @@ App({
     darkMode: false,
     unlockedGolden: false,
     visits: {},
-    visited: []
+    visited: [],
+    hiddenPoiTypes: []
   },
 
   // 根据主题设置导航栏颜色
@@ -99,6 +101,12 @@ App({
   setShowBusStops(v) {
     this.globalData.showBusStops = v
     wx.setStorageSync('showBusStops', v)
+  },
+
+  // 图标管理：设置被隐藏的地点分类（数组，如 ['公交站']）
+  setPoiTypesHidden(arr) {
+    this.globalData.hiddenPoiTypes = arr || []
+    wx.setStorageSync('hiddenPoiTypes', this.globalData.hiddenPoiTypes)
   },
 
   // 显示/隐藏地图上的地点名称

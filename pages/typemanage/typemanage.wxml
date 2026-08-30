@@ -1,5 +1,5 @@
 
-<view class="page theme-{{theme}} {{dark ? 'dark' : '}}">
+<view class="page theme-{{theme}} {{dark ? 'dark' : ''}}">
   <nav-bar title="图标管理" showBack theme="{{theme}}" dark="{{dark}}" plain />
 
   <view class="hint">选择在地图上显示的图标分类，关掉哪类，地图上就隐藏哪类图标</view>

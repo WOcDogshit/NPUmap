@@ -9,15 +9,11 @@
       <text class="log-version">内测版 v0.4</text>
       <text class="log-date">2026-08-30</text>
     </view>
-    <view class="log-item">· 新增实时步行 / 骑行导航：定位跟随、分步指引、到路口振动提醒</view>
-    <view class="log-item">· 导航结束统计本次用时</view>
+    <view class="log-item">· 新增实时步行 / 骑行导航：定位跟随、分步指引、振动提醒、结束统计用时</view>
     <view class="log-item">· 导航界面沉浸式改造：顶部指引卡、底部退出、地图固定北向上</view>
     <view class="log-item">· 校园地点扩充至 47 个：篮球场、学院楼、启真湖等</view>
-    <view class="log-item">· 新增图标分类管理：可按分类开关地图图标（更多页）</view>
-    <view class="log-item">· 更多页支持折叠面板与快捷入口</view>
-    <view class="log-item">· 首页问候语按时段自动匹配</view>
-    <view class="log-item">· 安卓全面屏底部小白条沉浸适配</view>
-    <view class="log-item">· 关于页更新为双校区介绍</view>
+    <view class="log-item">· 新增图标分类管理（更多页）+ 更多页折叠面板</view>
+    <view class="log-item">· 问候语按时段、安卓小白条适配、双校区介绍</view>
   </view>
 
   <view class="log-card">

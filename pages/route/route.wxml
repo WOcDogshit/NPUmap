@@ -1,5 +1,5 @@
 <view class="page theme-{{theme}} {{dark ? 'dark' : ''}}">
-  <nav-bar title="{{navTitle}}" showBack theme="{{theme}}" dark="{{dark}}" />
+  <nav-bar wx:if="{{!navMode}}" title="{{navTitle}}" showBack theme="{{theme}}" dark="{{dark}}" />
   
 
   
@@ -61,12 +61,13 @@
       </view>
     </scroll-view>
 
-    <view class="nav-start" wx:if="{{steps.length}}" bindtap="startNav">🚶 开始导航</view>
-
-    <view class="actions">
-      <view class="btn btn-fav {{routeFaved ? 'on' : ''}}" bindtap="toggleFavRoute">{{routeFaved ? '已收藏 ⭐' : '收藏 ⭐'}}</view>
-      <view class="btn btn-change" bindtap="showStartPicker">换起点</view>
-      <view class="btn btn-back" bindtap="back">返回</view>
+    <view class="panel-foot">
+      <view class="nav-start" wx:if="{{steps.length}}" bindtap="startNav">🚶 开始导航</view>
+      <view class="actions">
+        <view class="btn btn-fav {{routeFaved ? 'on' : ''}}" bindtap="toggleFavRoute">{{routeFaved ? '已收藏 ⭐' : '收藏 ⭐'}}</view>
+        <view class="btn btn-change" bindtap="showStartPicker">换起点</view>
+        <view class="btn btn-back" bindtap="back">返回</view>
+      </view>
     </view>
   </view>
   <view class="panel nav-panel" wx:else>

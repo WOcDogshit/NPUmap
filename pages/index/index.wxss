@@ -501,7 +501,8 @@
   border-radius: 26rpx;
   background: var(--soft);
   position: relative;
-  transition: background 0.25s ease;
+  transition: background 0.3s ease;
+  -webkit-transition: background 0.3s ease;
   flex-shrink: 0;
 }
 
@@ -518,12 +519,13 @@
   height: 40rpx;
   border-radius: 50%;
   background: #ffffff;
-  box-shadow: 0 2rpx 6rpx rgba(0, 0, 0, 0.2);
-  transition: left 0.25s ease;
+  box-shadow: 0 2rpx 6rpx rgba(0, 0, 0, 0.25);
+  transition: transform 0.32s cubic-bezier(0.34, 1.56, 0.64, 1);
+  -webkit-transition: transform 0.32s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .type-switch.on .type-knob {
-  left: 42rpx;
+  transform: translateX(36rpx);
 }
 
 

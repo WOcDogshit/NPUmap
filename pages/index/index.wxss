@@ -493,3 +493,36 @@
   bottom: calc(16rpx + env(safe-area-inset-bottom));
 }
 
+
+/* 自定义胶囊开关 */
+.type-switch {
+  width: 88rpx;
+  height: 52rpx;
+  border-radius: 26rpx;
+  background: var(--soft);
+  position: relative;
+  transition: background 0.25s ease;
+  flex-shrink: 0;
+}
+
+
+.type-switch.on {
+  background: var(--c-primary);
+}
+
+.type-knob {
+  position: absolute;
+  top: 6rpx;
+  left: 6rpx;
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 2rpx 6rpx rgba(0, 0, 0, 0.2);
+  transition: left 0.25s ease;
+}
+
+.type-switch.on .type-knob {
+  left: 42rpx;
+}
+

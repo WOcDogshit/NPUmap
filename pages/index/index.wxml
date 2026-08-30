@@ -113,7 +113,9 @@
         <view class="type-emoji">{{item.icon}}</view>
         <text class="type-name">{{item.type}}</text>
         <text class="type-count">{{item.count}} 个</text>
-        <switch checked="{{hiddenTypes.indexOf(item.type) === -1}}" color="#1464e0" data-type="{{item.type}}" bindchange="togglePoiType" />
+        <view class="type-switch {{hiddenTypes.indexOf(item.type) === -1 ? 'on' : ''}}" data-type="{{item.type}}" bindtap="togglePoiType">
+          <view class="type-knob"></view>
+        </view>
       </view>
     </scroll-view>
   </view>

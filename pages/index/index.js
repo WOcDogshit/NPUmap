@@ -311,14 +311,13 @@ Page({
     this.setData({ poiTypes: Object.values(map) })
   },
 
-  // 开关某个分类的图标显示
+  // 开关某个分类的图标显示（自定义胶囊开关，点击切换）
   togglePoiType(e) {
     const type = e.currentTarget.dataset.type
-    const show = e.detail.value
     const hidden = this.data.hiddenTypes.slice()
     const i = hidden.indexOf(type)
-    if (show && i > -1) hidden.splice(i, 1)
-    if (!show && i === -1) hidden.push(type)
+    if (i > -1) hidden.splice(i, 1)
+    else hidden.push(type)
     this.setData({ hiddenTypes: hidden })
     app.setPoiTypesHidden(hidden)
     this.buildMarkers(this.data.filtered || this.data.pois)

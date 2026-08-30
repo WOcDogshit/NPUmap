@@ -87,7 +87,7 @@
 
   <!-- 导航模式：底部退出按钮 -->
   <view class="nav-bottom-exit" wx:if="{{navMode}}">
-    <view class="nav-exit-btn" bindtap="stopNav">退出导航</view>
+    <view class="nav-exit-btn" bindtap="onExitNav">退出导航</view>
   </view>
 
   <!-- 起点选择弹层 -->

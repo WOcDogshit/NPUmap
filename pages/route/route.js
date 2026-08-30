@@ -306,6 +306,8 @@ Page({
       return
     }
     this._navStepIdx = -1
+    // 记录导航开始时间，用于结束时提醒用时
+    this._navStartTime = Date.now()
     const from = this.data.from
     // 用放大的当前位置图标替代系统小蓝点
     const markers = this.data.markers.slice()
@@ -350,6 +352,21 @@ Page({
           }
         })
       }
+    })
+  },
+
+  // 用户主动退出导航：结束并提醒本次用时
+  onExitNav() {
+    const elapsed = Date.now() - (this._navStartTime || Date.now())
+    const mins = Math.floor(elapsed / 60000)
+    const secs = Math.floor((elapsed % 60000) / 1000)
+    const timeText = mins > 0 ? mins + ' 分 ' + secs + ' 秒' : secs + ' 秒'
+    this.stopNav()
+    wx.showModal({
+      title: '导航结束',
+      content: '本次导航用时 ' + timeText,
+      showCancel: false,
+      confirmText: '好的'
     })
   },
 

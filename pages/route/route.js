@@ -316,7 +316,7 @@ Page({
         id: 0,
         latitude: from ? from.latitude : to.latitude,
         longitude: from ? from.longitude : to.longitude,
-        iconPath: '/images/marker-blue.png',
+        iconPath: this.data.routeMode === 'bicycling' ? '/images/marker-bike.png' : '/images/marker-walk.png',
         width: 68,
         height: 68,
         anchor: { x: 0.5, y: 0.5 }

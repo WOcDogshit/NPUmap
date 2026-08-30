@@ -22,10 +22,6 @@
   <view class="panel" wx:if="{{!navMode}}">
     <view class="panel-head">
       <text class="panel-title">步行路线</text>
-      <view wx:if="{{!loading && !errorMsg}}" class="chips">
-        <text class="chip chip-time">🕐 约 {{durationMin}} 分钟</text>
-        <text class="chip chip-dist">📏 {{distanceKm}} 公里</text>
-      </view>
     </view>
 
     <!-- 步行 / 骑行切换 -->
@@ -72,7 +68,7 @@
     </view>
   </view>
   <!-- 导航模式：顶部信息卡（可收起，收起后地图更大） -->
-  <view class="nav-top-card" style="padding-top: {{navStatusBar}}px" wx:else>
+  <view class="nav-top-card" style="top: {{navStatusBar}}px" wx:else>
     <view class="nav-card-head">
       <view class="nav-title">{{routeMode === 'bicycling' ? '🚴 骑行导航中' : '🚶 步行导航中'}}</view>
       <view class="nav-card-collapse" bindtap="toggleNavCard">{{navCardOpen ? '收起 ▾' : '展开 ▴'}}</view>

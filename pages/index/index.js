@@ -292,7 +292,8 @@ Page({
 
   // ===== 图标分类管理（独立页面） =====
   openPoiTypes() {
-    wx.navigateTo({ url: '/pages/typemanage/typemanage' })
+    // 图标管理已移入「更多」页面
+    wx.navigateTo({ url: '/pages/more/more' })
   },
 
   // 地图缩放变化：放大到 16 级才显示名称标签，缩小则只显示图标

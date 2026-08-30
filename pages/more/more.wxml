@@ -46,6 +46,21 @@
     </view>
   </view>
 
+  <!-- 图标管理 -->
+  <view class="group">
+    <view class="group-title">图标管理</view>
+    <view class="card">
+      <view class="type-row" wx:for="{{types}}" wx:key="type">
+        <view class="type-emoji">{{item.icon}}</view>
+        <view class="type-info">
+          <view class="type-name">{{item.type}}</view>
+          <view class="type-count">{{item.count}} 个</view>
+        </view>
+        <switch checked="{{item.visible}}" color="#1464e0" data-type="{{item.type}}" bindchange="togglePoiType" />
+      </view>
+    </view>
+  </view>
+
   <!-- 地图功能 -->
   <view class="group">
     <view class="group-title">地图功能</view>

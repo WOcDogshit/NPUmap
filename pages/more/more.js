@@ -55,12 +55,38 @@ Page({
       favorites: this.buildFavorites(),
       themes: this.buildThemes()
     })
+    this.buildTypes()
   },
 
   // 主题列表：隐藏主题需先解锁才显示
   buildThemes() {
     const unlocked = app.globalData.unlockedGolden
     return THEMES.filter(t => !t.hidden || unlocked)
+  },
+
+  // ===== 图标管理：分类开关 =====
+  buildTypes() {
+    const hidden = app.globalData.hiddenPoiTypes || []
+    const map = {}
+    poisData.pois.forEach(p => {
+      const t = p.type || '其他'
+      if (!map[t]) map[t] = { type: t, icon: p.icon || '📍', count: 0 }
+      map[t].count++
+    })
+    // 预先算好每个分类是否显示（避免在 WXML 里调用 indexOf）
+    const types = Object.values(map).map(x => Object.assign({}, x, { visible: hidden.indexOf(x.type) === -1 }))
+    this.setData({ types })
+  },
+
+  togglePoiType(e) {
+    const type = e.currentTarget.dataset.type
+    const show = e.detail.value
+    const hidden = (app.globalData.hiddenPoiTypes || []).slice()
+    const i = hidden.indexOf(type)
+    if (show && i > -1) hidden.splice(i, 1)
+    if (!show && i === -1) hidden.push(type)
+    app.setPoiTypesHidden(hidden)
+    this.buildTypes()
   },
 
   buildFavorites() {

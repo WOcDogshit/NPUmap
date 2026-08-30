@@ -174,6 +174,12 @@ Page({
       // 保存路线数据，供实时导航使用
       this._steps = r.steps
       this._polyline = r.polyline
+      // 用 API 返回的真实距离校准几何折线长度（折线是近似，比实际路网距离短）
+      let geoLen = 0
+      for (let i = 0; i < r.polyline.length - 1; i++) {
+        geoLen += navDist(r.polyline[i], r.polyline[i + 1])
+      }
+      this._geoScale = geoLen > 0 && r.distance > 0 ? r.distance / geoLen : 1
       const markers = [
         {
           id: 1,
@@ -311,54 +317,12 @@ Page({
     this._navStepIdx = -1
     // 记录导航开始时间，用于结束时提醒用时
     this._navStartTime = Date.now()
-    const from = this.data.from
-    // 用放大的当前位置图标替代系统小蓝点
-    const markers = this.data.markers.slice()
-    if (!markers.some(m => m.id === 0)) {
-      markers.push({
-        id: 0,
-        latitude: from ? from.latitude : to.latitude,
-        longitude: from ? from.longitude : to.longitude,
-        iconPath: this.data.routeMode === 'bicycling' ? '/images/marker-bike.png' : '/images/marker-walk.png',
-        width: 60,
-        height: 60,
-        anchor: { x: 0.5, y: 0.5 }
-      })
-    }
-    // 方向箭头：显示在位置上方，随手机朝向旋转
-    if (!markers.some(m => m.id === 1)) {
-      markers.push({
-        id: 1,
-        latitude: (from ? from.latitude : to.latitude) + 0.00006,
-        longitude: from ? from.longitude : to.longitude,
-        iconPath: '/images/marker-dir.png',
-        width: 44,
-        height: 44,
-        anchor: { x: 0.5, y: 0.5 },
-        rotation: 0
-      })
-    }
-    // 开启罗盘：更新方向箭头，指示手机朝向
-    if (wx.startCompass) wx.startCompass({ fail: () => {} })
-    if (wx.onCompassChange) {
-      wx.onCompassChange((res) => {
-        if (this.data.navMode && typeof res.direction === 'number') {
-          const ms = this.data.markers.slice()
-          const di = ms.findIndex(m => m.id === 1)
-          if (di > -1) {
-            ms[di] = Object.assign({}, ms[di], { rotation: res.direction % 360 })
-            this.setData({ markers: ms })
-          }
-        }
-      })
-    }
     this.setData({
       navMode: true,
       scale: 18,
       rotate: 0,
       includePoints: [],
-      showLocation: false,
-      markers,
+      showLocation: true,
       navInstruction: steps[0].instruction || '',
       navRemainDist: '剩余 ' + (this.data.distanceKm || ''),
       navRemainMin: '约 ' + (this.data.durationMin || '') + ' 分钟'
@@ -403,11 +367,7 @@ Page({
   stopNav() {
     if (wx.stopLocationUpdate) wx.stopLocationUpdate({ fail: () => {} })
     if (wx.offLocationChange) wx.offLocationChange()
-    if (wx.stopCompass) wx.stopCompass({ fail: () => {} })
-    if (wx.offCompassChange) wx.offCompassChange()
-    // 移除放大的位置图标和方向箭头，恢复系统定位点
-    const markers = (this.data.markers || []).filter(m => m.id !== 0 && m.id !== 1)
-    this.setData({ navMode: false, scale: 15, rotate: 0, showLocation: true, markers })
+    this.setData({ navMode: false, scale: 15, rotate: 0, showLocation: true })
   },
 
   // 收起 / 展开顶部导航信息卡（收起后地图可视区域更大）
@@ -423,16 +383,9 @@ Page({
     const remainText = r.remain >= 1000
       ? (r.remain / 1000).toFixed(1) + ' 公里'
       : Math.max(1, Math.round(r.remain)) + ' 米'
-    // 更新放大的当前位置图标和方向箭头
-    const markers = this.data.markers.slice()
-    markers.forEach(m => {
-      if (m.id === 0) Object.assign(m, { latitude: cur.latitude, longitude: cur.longitude })
-      if (m.id === 1) Object.assign(m, { latitude: cur.latitude + 0.00006, longitude: cur.longitude })
-    })
-    // 只跟随位置，不重置缩放级别（用户手动放大后保持）；地图固定北向上
+    // 只跟随位置，不重置缩放级别（用户手动放大后保持）；位置用系统蓝点显示
     this.setData({
       center: cur,
-      markers,
       navInstruction: r.instruction,
       navRemainDist: '剩余 ' + remainText,
       navRemainMin: '约 ' + Math.max(1, Math.round(r.remain / this.speedPerMin())) + ' 分钟'
@@ -492,7 +445,7 @@ Page({
     })
     return {
       idx: bestIdx,
-      remain: remain,
+      remain: remain * (this._geoScale || 1),
       instruction: steps[bestIdx] ? steps[bestIdx].instruction : ''
     }
   },

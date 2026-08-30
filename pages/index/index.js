@@ -9,21 +9,50 @@ const EMOJI_FILE = {
   '🚌': 'e14', '🚍': 'e15'
 }
 
-// 顶部问候语池：每次打开随机选一句
-const GREETINGS = [
-  '同学，今天去哪儿？🗺️',
-  '新的一天，从好心情开始 ☀️',
-  '早安，今天也元气满满 ✨',
-  '中午好，下课去干饭吧 🍜',
-  '下午好，图书馆走起吗 📚',
-  '晚上好，回宿舍注意安全 🌙',
-  '迷路了？别慌，有我在 📍',
-  '这节课在哪个楼？查查 🏫',
-  '下课啦，想去哪转转 🚶',
-  '开学不迷路，就靠它 💪',
-  '周末去哪儿逛逛？🎉',
-  '累了吗？看看附近美食 🍰'
-]
+// 顶部问候语池：按时间段分组，自动匹配当前时间（早/中/下午/晚/深夜）
+const GREETINGS = {
+  morning: [
+    '早安，今天也元气满满 ✨',
+    '早上好，晨光正好去上课 🏫',
+    '新的一天，从好心情开始 ☀️'
+  ],
+  noon: [
+    '中午好，下课去干饭吧 🍜',
+    '午饭时间到，别饿着自己 🍱',
+    '中午好，吃完饭去散散步 🌤️'
+  ],
+  afternoon: [
+    '下午好，图书馆走起吗 📚',
+    '下午好，课上完了去转转 🚶',
+    '下午好，有课也别迷路哦 🗺️'
+  ],
+  evening: [
+    '晚上好，回宿舍注意安全 🌙',
+    '晚上好，夜宵安排一下吗 🍢',
+    '晚上好，今天过得怎么样 ✨'
+  ],
+  night: [
+    '夜深了，早点休息呀 🌙',
+    '这么晚还在呀，别熬夜哦 😴',
+    '深夜了，记得早点睡好觉 🛏️'
+  ]
+}
+
+// 当前时间对应的问候时段
+function timeKey() {
+  const h = new Date().getHours()
+  if (h >= 5 && h < 11) return 'morning'
+  if (h >= 11 && h < 13) return 'noon'
+  if (h >= 13 && h < 18) return 'afternoon'
+  if (h >= 18 && h < 23) return 'evening'
+  return 'night'
+}
+
+// 按当前时间选一句问候
+function greetingForNow() {
+  const arr = GREETINGS[timeKey()]
+  return arr[Math.floor(Math.random() * arr.length)]
+}
 
 // 根据 emoji 找对应图标文件（忽略变体选择符差异）
 function emojiFile(icon) {
@@ -63,7 +92,7 @@ Page({
     const showLabels = app.globalData.showLabels
     const showBusStops = app.globalData.showBusStops
     const dark = app.globalData.darkMode
-    const greet = GREETINGS[Math.floor(Math.random() * GREETINGS.length)]
+    const greet = greetingForNow()
     const campuses = poisData.campuses
     const saved = wx.getStorageSync('currentCampus') || 'changan'
     const currentCampus = campuses.some(c => c.id === saved) ? saved : 'changan'
@@ -99,12 +128,13 @@ Page({
     wx.showToast({ title: '已切换到' + campus.shortName, icon: 'none' })
   },
 
-  // 点击顶部问候语：随机换一句（排除当前这句）
+  // 点击顶部问候语：在当前时段内随机换一句（排除当前这句）
   refreshGreet() {
     const current = this.data.greet
+    const arr = GREETINGS[timeKey()]
     let greet = current
-    while (greet === current && GREETINGS.length > 1) {
-      greet = GREETINGS[Math.floor(Math.random() * GREETINGS.length)]
+    while (greet === current && arr.length > 1) {
+      greet = arr[Math.floor(Math.random() * arr.length)]
     }
     this.setData({ greet })
   },

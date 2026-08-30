@@ -80,11 +80,12 @@ Page({
     navInstruction: '',
     navRemainDist: '',
     navRemainMin: '',
-    // 导航地图朝向：heading=前进方向朝上（跟随），north=北向上
-    navHeadingMode: 'heading',
+    // 地图固定北向上（放弃朝向旋转）
     rotate: 0,
-    // 顶部导航信息卡：默认展开；收起后地图更大
-    navCardOpen: true,
+    // 顶部导航信息卡：默认收起（不遮挡地图）
+    navCardOpen: false,
+    // 是否显示系统定位蓝点（导航中用放大图标替代）
+    showLocation: true,
     // 状态栏高度（顶部导航卡避开状态栏）
     navStatusBar: 20,
     // 深色地图（地图个性化样式）：微信小程序的官方高级能力，当前未开通，地图底图保持浅色。
@@ -167,8 +168,9 @@ Page({
       { latitude: to.latitude, longitude: to.longitude },
       this.data.routeMode
     ).then((r) => {
-      // 保存步骤数据，供实时导航使用
+      // 保存路线数据，供实时导航使用
       this._steps = r.steps
+      this._polyline = r.polyline
       const markers = [
         {
           id: 1,
@@ -289,10 +291,10 @@ Page({
   switchMode(e) {
     const mode = e.currentTarget.dataset.mode
     if (mode === this.data.routeMode) return
+    // 只切换模式（剩余时间按步行/骑行速度估算），不重新请求路线，避免地图路线强制刷新
     this.setData({ routeMode: mode, navMode: false })
     if (wx.offLocationChange) wx.offLocationChange()
     if (wx.stopLocationUpdate) wx.stopLocationUpdate({ fail: () => {} })
-    this.loadRoute()
   },
 
   // ===== 实时步行导航 =====
@@ -304,23 +306,27 @@ Page({
       return
     }
     this._navStepIdx = -1
-    // 开启罗盘，获取手机朝向（用于「前进朝上」跟随旋转）
-    if (wx.startCompass) wx.startCompass({ fail: () => {} })
-    if (wx.onCompassChange) {
-      wx.onCompassChange((res) => {
-        if (this.data.navMode && this.data.navHeadingMode === 'heading' && typeof res.direction === 'number') {
-          const rotate = res.direction % 360
-          this._currentRotate = rotate
-          this.setData({ rotate })
-        }
+    const from = this.data.from
+    // 用放大的当前位置图标替代系统小蓝点
+    const markers = this.data.markers.slice()
+    if (!markers.some(m => m.id === 0)) {
+      markers.push({
+        id: 0,
+        latitude: from ? from.latitude : to.latitude,
+        longitude: from ? from.longitude : to.longitude,
+        iconPath: '/images/marker-blue.png',
+        width: 68,
+        height: 68,
+        anchor: { x: 0.5, y: 0.5 }
       })
     }
     this.setData({
       navMode: true,
       scale: 18,
       rotate: 0,
-      // 清掉自动缩放适配，让用户手动缩放的级别保持住
       includePoints: [],
+      showLocation: false,
+      markers,
       navInstruction: steps[0].instruction || '',
       navRemainDist: '剩余 ' + (this.data.distanceKm || ''),
       navRemainMin: '约 ' + (this.data.durationMin || '') + ' 分钟'
@@ -350,16 +356,9 @@ Page({
   stopNav() {
     if (wx.stopLocationUpdate) wx.stopLocationUpdate({ fail: () => {} })
     if (wx.offLocationChange) wx.offLocationChange()
-    if (wx.stopCompass) wx.stopCompass({ fail: () => {} })
-    if (wx.offCompassChange) wx.offCompassChange()
-    this.setData({ navMode: false, scale: 15, rotate: 0 })
-  },
-
-  // 切换导航地图朝向：前进方向朝上 / 北向上
-  switchHeadingMode(e) {
-    const mode = e.currentTarget.dataset.mode
-    if (mode === this.data.navHeadingMode) return
-    this.setData({ navHeadingMode: mode, rotate: mode === 'north' ? 0 : (this._currentRotate || 0) })
+    // 移除放大的当前位置图标，恢复系统定位点
+    const markers = (this.data.markers || []).filter(m => m.id !== 0)
+    this.setData({ navMode: false, scale: 15, rotate: 0, showLocation: true, markers })
   },
 
   // 收起 / 展开顶部导航信息卡（收起后地图可视区域更大）
@@ -375,9 +374,16 @@ Page({
     const remainText = r.remain >= 1000
       ? (r.remain / 1000).toFixed(1) + ' 公里'
       : Math.max(1, Math.round(r.remain)) + ' 米'
-    // 只跟随位置，不重置缩放级别（用户手动放大后保持），地图朝向由罗盘控制
+    // 更新放大的当前位置图标
+    const markers = this.data.markers.slice()
+    const li = markers.findIndex(m => m.id === 0)
+    if (li > -1) {
+      markers[li] = Object.assign({}, markers[li], { latitude: cur.latitude, longitude: cur.longitude })
+    }
+    // 只跟随位置，不重置缩放级别（用户手动放大后保持）；地图固定北向上
     this.setData({
       center: cur,
+      markers,
       navInstruction: r.instruction,
       navRemainDist: '剩余 ' + remainText,
       navRemainMin: '约 ' + Math.max(1, Math.round(r.remain / this.speedPerMin())) + ' 分钟'
@@ -397,49 +403,48 @@ Page({
   // 计算当前位置对应的路线步骤与剩余距离
   calcNav(cur) {
     const steps = this._steps || []
+    const polyline = this._polyline || []
     const to = this.data.to
     if (!steps.length) return null
-    let bestIdx = -1
+    // 1) 在总路线上找最近点，剩余距离沿路线几何计算（更准确）
+    let bestSeg = -1
     let bestDist = Infinity
     let bestProj = null
-    let bestSeg = -1
+    for (let i = 0; i < polyline.length - 1; i++) {
+      const r = navPointSeg(cur, polyline[i], polyline[i + 1])
+      if (r.dist < bestDist) {
+        bestDist = r.dist
+        bestProj = r.proj
+        bestSeg = i
+      }
+    }
+    let remain = 0
+    if (bestSeg > -1 && bestProj) {
+      remain += navDist(bestProj, polyline[bestSeg + 1])
+      for (let i = bestSeg + 1; i < polyline.length - 1; i++) {
+        remain += navDist(polyline[i], polyline[i + 1])
+      }
+    } else {
+      remain = to ? navDist(cur, to) : 0
+    }
+    // 2) 当前指引：找距离最近的路线步骤
+    let bestIdx = 0
+    let bestStepDist = Infinity
     steps.forEach((s, si) => {
       const pts = s.points
       if (!pts || pts.length < 2) return
       for (let i = 0; i < pts.length - 1; i++) {
-        const r = navPointSeg(cur, pts[i], pts[i + 1])
-        if (r.dist < bestDist) {
-          bestDist = r.dist
+        const d = navPointSeg(cur, pts[i], pts[i + 1]).dist
+        if (d < bestStepDist) {
+          bestStepDist = d
           bestIdx = si
-          bestProj = r.proj
-          bestSeg = i
         }
       }
     })
-    if (bestIdx === -1) {
-      // 兜底：没有分步路径点时，用直线距离估算
-      return {
-        idx: 0,
-        remain: to ? navDist(cur, to) : 0,
-        instruction: steps[0] ? steps[0].instruction : ''
-      }
-    }
-    // 剩余距离 = 当前段剩余 + 后续各段距离
-    let remain = 0
-    const pts = steps[bestIdx].points
-    if (pts && bestSeg + 1 < pts.length) {
-      remain += navDist(bestProj, pts[bestSeg + 1])
-      for (let i = bestSeg + 1; i < pts.length - 1; i++) {
-        remain += navDist(pts[i], pts[i + 1])
-      }
-    }
-    for (let j = bestIdx + 1; j < steps.length; j++) {
-      remain += steps[j].distance || 0
-    }
     return {
       idx: bestIdx,
       remain: remain,
-      instruction: steps[bestIdx].instruction || ''
+      instruction: steps[bestIdx] ? steps[bestIdx].instruction : ''
     }
   },
 

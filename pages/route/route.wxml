@@ -13,7 +13,7 @@
     polyline="{{polyline}}"
     include-points="{{includePoints}}"
     rotate="{{rotate}}"
-    show-location="{{true}}"
+    show-location="{{showLocation}}"
     subkey="{{mapSubkey}}"
     layer-style="{{mapLayerStyle}}"
   ></map>
@@ -82,10 +82,6 @@
       <text class="nav-remain">{{navRemainDist}}</text>
       <text class="nav-sep">·</text>
       <text class="nav-time">{{navRemainMin}}</text>
-    </view>
-    <view wx:if="{{navCardOpen}}" class="nav-heading">
-      <view class="heading-tab {{navHeadingMode === 'heading' ? 'active' : ''}}" data-mode="heading" bindtap="switchHeadingMode">🧭 前进朝上</view>
-      <view class="heading-tab {{navHeadingMode === 'north' ? 'active' : ''}}" data-mode="north" bindtap="switchHeadingMode">⬆️ 北向上</view>
     </view>
   </view>
 

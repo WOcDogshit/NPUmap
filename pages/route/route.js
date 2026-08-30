@@ -317,12 +317,16 @@ Page({
     this._navStepIdx = -1
     // 记录导航开始时间，用于结束时提醒用时
     this._navStartTime = Date.now()
+    // 保存完整标记（起点+终点），导航中去掉起点图标（已出发）
+    this._fullMarkers = this.data.markers || []
+    const navMarkers = (this.data.markers || []).filter(m => m.id !== 1)
     this.setData({
       navMode: true,
       scale: 18,
       rotate: 0,
       includePoints: [],
       showLocation: true,
+      markers: navMarkers,
       navInstruction: steps[0].instruction || '',
       navRemainDist: '剩余 ' + (this.data.distanceKm || ''),
       navRemainMin: '约 ' + (this.data.durationMin || '') + ' 分钟'
@@ -367,7 +371,7 @@ Page({
   stopNav() {
     if (wx.stopLocationUpdate) wx.stopLocationUpdate({ fail: () => {} })
     if (wx.offLocationChange) wx.offLocationChange()
-    this.setData({ navMode: false, scale: 15, rotate: 0, showLocation: true })
+    this.setData({ navMode: false, scale: 15, rotate: 0, showLocation: true, markers: this._fullMarkers || this.data.markers })
   },
 
   // 收起 / 展开顶部导航信息卡（收起后地图可视区域更大）
@@ -422,6 +426,9 @@ Page({
     }
     let remain = 0
     if (bestSeg > -1 && bestProj) {
+      // 当前位置到路线的垂直距离（走偏时要先回到路线）
+      remain += bestDist
+      // 沿路线从投影点到终点
       remain += navDist(bestProj, polyline[bestSeg + 1])
       for (let i = bestSeg + 1; i < polyline.length - 1; i++) {
         remain += navDist(polyline[i], polyline[i + 1])

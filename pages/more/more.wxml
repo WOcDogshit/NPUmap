@@ -3,10 +3,13 @@
   
 
   
-  <!-- 外观主题 -->
+  <!-- 外观主题（可折叠） -->
   <view class="group">
-    <view class="group-title">外观主题</view>
-    <view class="card">
+    <view class="group-title group-toggle" bindtap="toggleThemeOpen">
+      <text>外观主题</text>
+      <view class="chevron {{themeOpen ? 'up' : ''}}"></view>
+    </view>
+    <view class="card" wx:if="{{themeOpen}}">
       <view class="theme-row" wx:for="{{themes}}" wx:key="key" data-key="{{item.key}}" bindtap="setTheme">
         <view class="theme-dot" style="background: {{item.color}}"></view>
         <view class="theme-info">
@@ -46,10 +49,13 @@
     </view>
   </view>
 
-  <!-- 图标管理 -->
+  <!-- 图标管理（可折叠） -->
   <view class="group">
-    <view class="group-title">图标管理</view>
-    <view class="card">
+    <view class="group-title group-toggle" bindtap="toggleTypesOpen">
+      <text>图标管理</text>
+      <view class="chevron {{typesOpen ? 'up' : ''}}"></view>
+    </view>
+    <view class="card" wx:if="{{typesOpen}}">
       <view class="type-row" wx:for="{{types}}" wx:key="type">
         <view class="type-emoji">{{item.icon}}</view>
         <view class="type-info">

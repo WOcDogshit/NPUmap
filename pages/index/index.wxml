@@ -43,10 +43,7 @@
         bindtap="switchCampus"
       >友谊校区</view>
     </view>
-    <view class="tool-right">
-      <view class="types-btn" bindtap="openPoiTypes">🗂️</view>
-      <view class="locate-btn" bindtap="locate">📍</view>
-    </view>
+    <view class="locate-btn" bindtap="locate">📍</view>
   </view>
 
   <!-- 校园地图 -->

@@ -38,7 +38,10 @@ Page({
     themes: THEMES,
     nearbyOpen: false,
     nearbyList: [],
-    nearbyState: ''
+    nearbyState: '',
+    // 折叠面板：主题默认展开，图标管理默认收起
+    themeOpen: true,
+    typesOpen: false
   },
 
   onShow() {
@@ -62,6 +65,16 @@ Page({
   buildThemes() {
     const unlocked = app.globalData.unlockedGolden
     return THEMES.filter(t => !t.hidden || unlocked)
+  },
+
+  // 折叠 / 展开：外观主题
+  toggleThemeOpen() {
+    this.setData({ themeOpen: !this.data.themeOpen })
+  },
+
+  // 折叠 / 展开：图标管理
+  toggleTypesOpen() {
+    this.setData({ typesOpen: !this.data.typesOpen })
   },
 
   // ===== 图标管理：分类开关 =====

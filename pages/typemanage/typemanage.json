@@ -1,7 +1,3 @@
 {
-  "navigationBarTitleText": "图标管理",
-  "navigationStyle": "custom",
-  "usingComponents": {
-    "nav-bar": "/components/nav-bar/index"
-  }
+  "navigationBarTitleText": "图标管理"
 }

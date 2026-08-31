@@ -88,7 +88,9 @@ Page({
     // 图标分类管理
     poiTypeManagerOpen: false,
     poiTypes: [],
-    hiddenTypes: []
+    hiddenTypes: [],
+    // 首页下一节课
+    nextClass: null
   },
 
   onLoad() {
@@ -107,6 +109,7 @@ Page({
     this.currentScale = 15
     this.setData({ campus, greet, campuses, currentCampus, pois, filtered: decorated, center: campus.center, theme, showLabels, showBusStops, dark, hiddenTypes })
     this.buildPoiTypes(decorated)
+    this.refreshNextClass()
     app.setThemeNav(theme)
     this.buildMarkers(decorated)
   },
@@ -156,6 +159,7 @@ Page({
     const changed = theme !== this.data.theme || showLabels !== this.data.showLabels || showBusStops !== this.data.showBusStops || dark !== this.data.dark || hiddenTypes.join(',') !== (this.data.hiddenTypes || []).join(',')
     // 每次都同步主题，确保顶部导航栏渐变一定更新
     this.setData({ theme, showLabels, showBusStops, dark, hiddenTypes })
+    this.refreshNextClass()
     // 回到首页时按访问频率刷新列表顺序（搜索中不打扰）
     if (!this.data.keyword && this.data.pois && this.data.pois.length) {
       this.setData({ filtered: this.applyPinOrder(this.decorate(this.data.pois)) })
@@ -288,6 +292,34 @@ Page({
   // 去"更多"设置页
   goMore() {
     wx.navigateTo({ url: '/pages/more/more' })
+  },
+
+  // ===== 首页下一节课 =====
+  refreshNextClass() {
+    const raw = wx.getStorageSync('schedule') || []
+    if (!raw.length) {
+      this.setData({ nextClass: null })
+      return
+    }
+    const courses = raw.map(c => Object.assign({}, c, { timeText: c.startTime + ' – ' + c.endTime }))
+    this.setData({ nextClass: this.findNext(courses) })
+  },
+
+  // 计算"下一节课"（按当前时间往后找）
+  findNext(courses) {
+    const now = new Date()
+    const nowDay = now.getDay() === 0 ? 7 : now.getDay()
+    const hh = String(now.getHours()).padStart(2, '0')
+    const mm = String(now.getMinutes()).padStart(2, '0')
+    const cur = hh + ':' + mm
+    for (const c of courses) {
+      if (c.day > nowDay || (c.day === nowDay && c.startTime > cur)) return c
+    }
+    return null
+  },
+
+  goSchedule() {
+    wx.navigateTo({ url: '/pages/schedule/schedule' })
   },
 
   // ===== 图标分类管理（独立页面） =====

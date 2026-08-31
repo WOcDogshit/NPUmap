@@ -46,6 +46,24 @@
     <view class="locate-btn" bindtap="locate">📍</view>
   </view>
 
+  <!-- 下一节课卡片 -->
+  <view class="next-class" wx:if="{{nextClass}}" bindtap="goSchedule">
+    <view class="nc-emoji">📅</view>
+    <view class="nc-info">
+      <view class="nc-name">{{nextClass.name}}</view>
+      <view class="nc-meta">{{nextClass.timeText}} · {{nextClass.poiName || '未设地点'}}</view>
+    </view>
+    <view class="nc-go">去上课 ›</view>
+  </view>
+  <view class="next-class next-class-empty" wx:else bindtap="goSchedule">
+    <view class="nc-emoji">📅</view>
+    <view class="nc-info">
+      <view class="nc-name">还没有课表</view>
+      <view class="nc-meta">点这里添加你的课程</view>
+    </view>
+    <view class="nc-go">添加 ›</view>
+  </view>
+
   <!-- 校园地图 -->
   <map
     class="campus-map"

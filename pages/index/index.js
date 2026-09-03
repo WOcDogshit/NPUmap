@@ -88,7 +88,9 @@ Page({
     // 首页被隐藏的分类（buildMarkers 过滤用）
     hiddenTypes: [],
     // 首页下一节课
-    nextClass: null
+    nextClass: null,
+    // 首页课表卡片是否隐藏
+    nextClassHidden: false
   },
 
   onLoad() {
@@ -105,7 +107,7 @@ Page({
     const decorated = this.applyPinOrder(this.decorate(pois))
     const hiddenTypes = app.globalData.hiddenPoiTypes || []
     this.currentScale = 15
-    this.setData({ campus, greet, campuses, currentCampus, pois, filtered: decorated, center: campus.center, theme, showLabels, showBusStops, dark, hiddenTypes })
+    this.setData({ campus, greet, campuses, currentCampus, pois, filtered: decorated, center: campus.center, theme, showLabels, showBusStops, dark, hiddenTypes, nextClassHidden: wx.getStorageSync('nextClassHidden') === true })
     this.refreshNextClass()
     app.setThemeNav(theme)
     this.buildMarkers(decorated)
@@ -317,6 +319,18 @@ Page({
 
   goSchedule() {
     wx.navigateTo({ url: '/pages/schedule/schedule' })
+  },
+
+  // 隐藏首页课表卡片（记住选择）
+  hideNextClass() {
+    this.setData({ nextClassHidden: true })
+    wx.setStorageSync('nextClassHidden', true)
+  },
+
+  // 恢复显示课表卡片
+  showNextClass() {
+    this.setData({ nextClassHidden: false })
+    wx.setStorageSync('nextClassHidden', false)
   },
 
   // ===== 图标分类管理（独立页面） =====

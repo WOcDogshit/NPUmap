@@ -28,6 +28,29 @@
     </view>
   </view>
 
+  <!-- 下一节课卡片（可隐藏，位于校区切换上方） -->
+  <view wx:if="{{!nextClassHidden}}">
+    <view class="next-class" wx:if="{{nextClass}}" bindtap="goSchedule">
+      <view class="nc-emoji">📅</view>
+      <view class="nc-info">
+        <view class="nc-name">{{nextClass.name}}</view>
+        <view class="nc-meta">{{nextClass.timeText}} · {{nextClass.poiName || '未设地点'}}</view>
+      </view>
+      <view class="nc-go">去上课 ›</view>
+      <view class="nc-hide" catchtap="hideNextClass">✕</view>
+    </view>
+    <view class="next-class next-class-empty" wx:else bindtap="goSchedule">
+      <view class="nc-emoji">📅</view>
+      <view class="nc-info">
+        <view class="nc-name">还没有课表</view>
+        <view class="nc-meta">点这里添加你的课程</view>
+      </view>
+      <view class="nc-go">添加 ›</view>
+      <view class="nc-hide" catchtap="hideNextClass">✕</view>
+    </view>
+  </view>
+  <view class="next-class-hidden-bar" wx:else bindtap="showNextClass">📅 课表已隐藏 · 点此恢复</view>
+
   <!-- 顶部工具栏：校区切换 + 定位按钮（顶部对齐） -->
   <view class="top-row">
     <view class="campus-switch">
@@ -44,24 +67,6 @@
       >友谊校区</view>
     </view>
     <view class="locate-btn" bindtap="locate">📍</view>
-  </view>
-
-  <!-- 下一节课卡片 -->
-  <view class="next-class" wx:if="{{nextClass}}" bindtap="goSchedule">
-    <view class="nc-emoji">📅</view>
-    <view class="nc-info">
-      <view class="nc-name">{{nextClass.name}}</view>
-      <view class="nc-meta">{{nextClass.timeText}} · {{nextClass.poiName || '未设地点'}}</view>
-    </view>
-    <view class="nc-go">去上课 ›</view>
-  </view>
-  <view class="next-class next-class-empty" wx:else bindtap="goSchedule">
-    <view class="nc-emoji">📅</view>
-    <view class="nc-info">
-      <view class="nc-name">还没有课表</view>
-      <view class="nc-meta">点这里添加你的课程</view>
-    </view>
-    <view class="nc-go">添加 ›</view>
   </view>
 
   <!-- 校园地图 -->

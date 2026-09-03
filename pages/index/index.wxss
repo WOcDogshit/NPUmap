@@ -582,3 +582,28 @@
   margin-left: 12rpx;
 }
 
+
+/* 课表隐藏按钮 */
+.nc-hide {
+  font-size: 26rpx;
+  color: var(--text-muted);
+  padding: 6rpx 4rpx 6rpx 16rpx;
+  flex-shrink: 0;
+}
+
+/* 课表已隐藏恢复条 */
+.next-class-hidden-bar {
+  position: relative;
+  z-index: 30;
+  margin: 16rpx 28rpx 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1rpx dashed rgba(20, 100, 224, 0.4);
+  border-radius: 24rpx;
+  padding: 14rpx 24rpx;
+  font-size: 24rpx;
+  color: var(--text-sub);
+}
+

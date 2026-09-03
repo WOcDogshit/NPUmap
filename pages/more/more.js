@@ -1,4 +1,5 @@
 const poisData = require('../../data/pois.js')
+const { haversine } = require('../../utils/geo.js')
 const app = getApp()
 
 const THEMES = [
@@ -12,16 +13,6 @@ const THEMES = [
   { key: 'golden', name: '逐火救世', desc: '卑鄙我去吧瞬间就爱上雷神', color: '#d97706', hidden: true, golden: true }
 ]
 
-function haversine(a, b) {
-  const R = 6371000
-  const rad = d => d * Math.PI / 180
-  const dLat = rad(b.latitude - a.latitude)
-  const dLng = rad(b.longitude - a.longitude)
-  const s = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-    Math.cos(rad(a.latitude)) * Math.cos(rad(b.latitude)) *
-    Math.sin(dLng / 2) * Math.sin(dLng / 2)
-  return 2 * R * Math.asin(Math.sqrt(s))
-}
 
 function distText(m) {
   if (m < 1000) return Math.round(m) + ' 米'

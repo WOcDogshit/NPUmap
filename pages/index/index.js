@@ -85,9 +85,7 @@ Page({
     // 把样式绑定的 key 填到 mapSubkey，并把 mapLayerStyle 设为 1（1 = 微信深色样式）。
     mapSubkey: '',
     mapLayerStyle: 0,
-    // 图标分类管理
-    poiTypeManagerOpen: false,
-    poiTypes: [],
+    // 首页被隐藏的分类（buildMarkers 过滤用）
     hiddenTypes: [],
     // 首页下一节课
     nextClass: null
@@ -108,7 +106,6 @@ Page({
     const hiddenTypes = app.globalData.hiddenPoiTypes || []
     this.currentScale = 15
     this.setData({ campus, greet, campuses, currentCampus, pois, filtered: decorated, center: campus.center, theme, showLabels, showBusStops, dark, hiddenTypes })
-    this.buildPoiTypes(decorated)
     this.refreshNextClass()
     app.setThemeNav(theme)
     this.buildMarkers(decorated)

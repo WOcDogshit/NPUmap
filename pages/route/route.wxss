@@ -40,16 +40,7 @@
   color: var(--text-strong);
 }
 
-.chips {
-  display: flex;
-}
 
-.chip {
-  font-size: 22rpx;
-  border-radius: 26rpx;
-  padding: 6rpx 18rpx;
-  margin-left: 12rpx;
-}
 
 .chip-time {
   background: rgba(20, 100, 224, 0.10);
@@ -337,16 +328,7 @@
   white-space: nowrap;
 }
 
-.nav-panel {
-  padding-bottom: calc(36rpx + constant(safe-area-inset-bottom));
-  padding-bottom: calc(36rpx + env(safe-area-inset-bottom));
-}
 
-.nav-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
 
 .nav-title {
   font-size: 28rpx;
@@ -354,14 +336,6 @@
   color: var(--text-strong);
 }
 
-.nav-exit {
-  font-size: 26rpx;
-  font-weight: 600;
-  color: #f04137;
-  padding: 8rpx 26rpx;
-  border: 2rpx solid rgba(240, 65, 55, 0.4);
-  border-radius: 34rpx;
-}
 
 .nav-instruction {
   margin-top: 26rpx;
@@ -377,27 +351,13 @@
   align-items: center;
 }
 
-.nav-remain {
-  font-size: 30rpx;
-  font-weight: 700;
-  color: var(--c-primary);
-}
 
-.nav-sep {
-  margin: 0 16rpx;
-  color: var(--text-muted);
-}
 
 .nav-time {
   font-size: 28rpx;
   color: var(--text-sub);
 }
 
-.nav-hint {
-  margin-top: 22rpx;
-  font-size: 24rpx;
-  color: var(--text-muted);
-}
 
 /* ===== 步行 / 骑行切换 ===== */
 .mode-switch {
@@ -434,11 +394,6 @@
 }
 
 /* 导航面板：更紧凑沉浸 */
-.nav-panel {
-  padding-top: 20rpx;
-  padding-bottom: calc(20rpx + constant(safe-area-inset-bottom));
-  padding-bottom: calc(20rpx + env(safe-area-inset-bottom));
-}
 
 .nav-panel .nav-instruction {
   margin-top: 18rpx;
@@ -456,24 +411,7 @@
 
 
 /* 导航朝向切换 */
-.nav-heading {
-  display: flex;
-  gap: 14rpx;
-  margin-top: 20rpx;
-}
 
-.heading-tab {
-  flex: 1;
-  height: 64rpx;
-  border-radius: 32rpx;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 26rpx;
-  font-weight: 600;
-  color: var(--text-sub);
-  background: var(--soft);
-}
 
 .heading-tab.active {
   color: #ffffff;
@@ -545,14 +483,5 @@
 }
 
 /* 朝向开关：小巧 */
-.nav-heading {
-  gap: 10rpx;
-  margin-top: 14rpx;
-}
 
-.heading-tab {
-  height: 50rpx;
-  border-radius: 25rpx;
-  font-size: 22rpx;
-}
 
